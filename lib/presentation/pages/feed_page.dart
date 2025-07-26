@@ -141,7 +141,7 @@ class _FeedPageState extends ConsumerState<FeedPage> {
       {
         'username': 'nature_photographer',
         'location': 'Jeju Island',
-        'avatar': 'assets/images/user_avatar_1.jpg',
+        'avatar': 'assets/images/profile_avatar.jpg',
         'image': 'assets/images/sample_post_3.jpg',
         'likes': 567,
         'caption': '제주도의 아름다운 자연 🌿 #제주 #자연 #사진',

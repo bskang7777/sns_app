@@ -55,9 +55,7 @@ class StoryList extends StatelessWidget {
                 image: isAddStory
                     ? null
                     : DecorationImage(
-                        image: AssetImage(
-                          'assets/images/user_avatar_${(index % 3) + 1}.jpg',
-                        ),
+                        image: AssetImage(_getAvatarImage(index)),
                         fit: BoxFit.cover,
                       ),
               ),
@@ -83,5 +81,17 @@ class StoryList extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String _getAvatarImage(int index) {
+    // 존재하는 이미지 파일만 사용
+    final availableImages = [
+      'assets/images/user_avatar_1.jpg',
+      'assets/images/user_avatar_2.jpg',
+      'assets/images/profile_avatar.jpg',
+    ];
+
+    // 인덱스를 사용 가능한 이미지 개수로 나눈 나머지를 사용
+    return availableImages[index % availableImages.length];
   }
 }
