@@ -1,5 +1,5 @@
 name: sns_app
-description: "Instagram Style SNS App - Share your moments with the world"
+description: "동네AI개발자 모임 - Instagram Style SNS App - AI 개발자들의 소통 공간"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev

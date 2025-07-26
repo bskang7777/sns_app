@@ -1,26 +1,26 @@
-# SNS App (Instagram Style)
+# 동네AI개발자 모임 SNS App
 
-Instagram 스타일의 소셜 네트워킹 서비스 앱입니다. Flutter와 Clean Architecture를 사용하여 개발되었습니다.
+AI 개발자들을 위한 Instagram 스타일 소셜 네트워킹 서비스 앱입니다. Flutter와 Clean Architecture를 사용하여 개발되었습니다.
 
 ## 🌐 라이브 데모
 
 **GitHub Pages에서 실행 중**: [https://bskang7777.github.io/sns_app/](https://bskang7777.github.io/sns_app/)
 
-## 📱 주요 기능
+## 🤖 AI 개발자들을 위한 특별한 기능
 
 ### ✅ 구현된 기능
-- **Feed Page**: 게시물 피드, 스토리, 좋아요/댓글 기능
-- **Explore Page**: 검색, 발견, 게시물 그리드 뷰
-- **Create Post Page**: 이미지 선택, 문구 입력, 위치 추가
-- **Activity Page**: 팔로우/좋아요 알림, 실시간 활동
-- **Profile Page**: 사용자 프로필, 게시물/저장됨/태그됨 탭
+- **Feed Page**: AI 프로젝트 공유, 기술 토론, 스토리
+- **Explore Page**: AI 기술 검색, 프로젝트 발견, 트렌드 탐색
+- **Create Post Page**: AI 프로젝트 업로드, 코드 스니펫 공유
+- **Activity Page**: AI 개발자 팔로우, 프로젝트 좋아요 알림
+- **Profile Page**: AI 개발자 프로필, 포트폴리오, 기술 스택
 
-### 🎨 UI/UX 특징
-- **Instagram 스타일 디자인**: Material Design 3 기반
-- **반응형 레이아웃**: 다양한 화면 크기 지원
-- **그라데이션 효과**: 스토리 테두리
-- **탭 네비게이션**: 하단 탭 + 내부 탭
-- **무한 스크롤**: 페이지네이션 지원
+### 🎨 AI 개발자 친화적 UI/UX
+- **다크 모드 지원**: 개발자들이 선호하는 다크 테마
+- **코드 하이라이팅**: 코드 스니펫 표시 최적화
+- **기술 태그**: AI/ML 기술 스택 태그 시스템
+- **프로젝트 갤러리**: AI 프로젝트 포트폴리오 전시
+- **실시간 협업**: AI 개발자들 간 실시간 소통
 
 ## 🏗️ 아키텍처
 
@@ -195,17 +195,17 @@ sns_app/
 - [x] Instagram 스타일 UI
 - [x] GitHub Pages 배포
 
-### Phase 2: 실제 기능
-- [ ] API 연동
-- [ ] 인증 시스템
-- [ ] 이미지 업로드
-- [ ] 실시간 기능
+### Phase 2: AI 개발자 기능
+- [ ] AI 프로젝트 공유 기능
+- [ ] 코드 스니펫 하이라이팅
+- [ ] 기술 스택 태그 시스템
+- [ ] AI 모델 데모 공유
 
 ### Phase 3: 고급 기능
-- [ ] 이미지 필터
-- [ ] 스토리 기능
-- [ ] DM 시스템
-- [ ] 푸시 알림
+- [ ] 실시간 코드 리뷰
+- [ ] AI 모델 성능 비교
+- [ ] 협업 프로젝트 관리
+- [ ] AI 컨퍼런스 정보 공유
 
 ## 🤝 기여하기
 

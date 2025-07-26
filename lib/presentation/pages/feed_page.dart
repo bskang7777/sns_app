@@ -56,7 +56,7 @@ class _FeedPageState extends ConsumerState<FeedPage> {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         title: Text(
-          'Instagram',
+          '동네AI개발자',
           style: AppTypography.headline3.copyWith(
             color: AppColors.textPrimary,
             fontWeight: FontWeight.bold,
@@ -123,28 +123,28 @@ class _FeedPageState extends ConsumerState<FeedPage> {
     // TODO: Replace with actual data from provider
     final List<Map<String, dynamic>> mockPosts = [
       {
-        'username': 'travel_lover',
-        'location': 'Seoul, Korea',
+        'username': 'ai_researcher_kim',
+        'location': '서울 AI 연구소',
         'avatar': 'assets/images/user_avatar_1.jpg',
-        'image': 'assets/images/sample_post_1.jpg',
+        'image': 'assets/images/ai_project_1.jpg',
         'likes': 245,
-        'caption': '아름다운 서울의 봄날 🌸 #서울 #봄 #여행',
+        'caption': '새로운 Transformer 모델 실험 결과! 🧠 #AI #Transformer #NLP #딥러닝',
       },
       {
-        'username': 'food_enthusiast',
-        'location': 'Busan, Korea',
+        'username': 'ml_engineer_park',
+        'location': '부산 ML 엔지니어링팀',
         'avatar': 'assets/images/user_avatar_2.jpg',
-        'image': 'assets/images/sample_post_2.jpg',
+        'image': 'assets/images/ai_project_2.jpg',
         'likes': 189,
-        'caption': '부산 해산물의 맛! 🦐 #부산 #해산물 #맛집',
+        'caption': '컴퓨터 비전 프로젝트 완성! 🖼️ #ComputerVision #OpenCV #Python #AI',
       },
       {
-        'username': 'nature_photographer',
-        'location': 'Jeju Island',
+        'username': 'data_scientist_lee',
+        'location': '대구 데이터 사이언스팀',
         'avatar': 'assets/images/profile_avatar.jpg',
-        'image': 'assets/images/sample_post_3.jpg',
+        'image': 'assets/images/ai_project_3.jpg',
         'likes': 567,
-        'caption': '제주도의 아름다운 자연 🌿 #제주 #자연 #사진',
+        'caption': '강화학습으로 게임 AI 개발 성공! 🎮 #ReinforcementLearning #GameAI #RL',
       },
     ];
 

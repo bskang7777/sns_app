@@ -34,7 +34,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
       backgroundColor: AppColors.background,
       appBar: AppBar(
         title: Text(
-          'user_profile',
+          'ai_developer_profile',
           style: AppTypography.headline3.copyWith(
             color: AppColors.textPrimary,
             fontWeight: FontWeight.bold,
@@ -132,7 +132,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _buildStatItem('게시물', '42'),
+                _buildStatItem('AI 프로젝트', '42'),
                 _buildStatItem('팔로워', '1.2K'),
                 _buildStatItem('팔로우', '890'),
               ],
@@ -171,7 +171,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '사용자 이름',
+                  '김AI개발자',
                   style: AppTypography.body1.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.textPrimary,
@@ -179,7 +179,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '사용자 소개글입니다. 여기에 자기소개를 작성할 수 있습니다.',
+                  'AI/ML 엔지니어 | 딥러닝 연구원 | 컴퓨터 비전 전문가',
                   style: AppTypography.body2.copyWith(
                     color: AppColors.textPrimary,
                   ),
@@ -199,17 +199,22 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '🌍 여행을 좋아하는 사람',
+            '🧠 딥러닝 모델 개발 및 연구',
             style: AppTypography.body2.copyWith(color: AppColors.textPrimary),
           ),
           const SizedBox(height: 4),
           Text(
-            '📸 사진 촬영',
+            '📊 데이터 사이언스 & 머신러닝',
             style: AppTypography.body2.copyWith(color: AppColors.textPrimary),
           ),
           const SizedBox(height: 4),
           Text(
-            '🍜 맛집 탐방',
+            '🖼️ 컴퓨터 비전 & 이미지 처리',
+            style: AppTypography.body2.copyWith(color: AppColors.textPrimary),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            '🤖 자연어 처리 & NLP',
             style: AppTypography.body2.copyWith(color: AppColors.textPrimary),
           ),
         ],
@@ -254,7 +259,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
                 ),
               ),
               child: Text(
-                '프로필 공유',
+                '포트폴리오 공유',
                 style: AppTypography.button.copyWith(
                   color: AppColors.textPrimary,
                 ),
@@ -323,7 +328,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              'assets/images/sample_post_${(index % 3) + 1}.jpg',
+              'assets/images/ai_project_${(index % 3) + 1}.jpg',
             ),
             fit: BoxFit.cover,
           ),
@@ -382,7 +387,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              'assets/images/sample_post_${(index % 3) + 1}.jpg',
+              'assets/images/ai_project_${(index % 3) + 1}.jpg',
             ),
             fit: BoxFit.cover,
           ),
@@ -400,7 +405,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              'assets/images/sample_post_${(index % 3) + 1}.jpg',
+              'assets/images/ai_project_${(index % 3) + 1}.jpg',
             ),
             fit: BoxFit.cover,
           ),
@@ -436,7 +441,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
                 color: AppColors.textPrimary,
               ),
               title: Text(
-                '저장됨',
+                '저장된 프로젝트',
                 style: AppTypography.body1.copyWith(
                   color: AppColors.textPrimary,
                 ),
@@ -452,7 +457,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
                 color: AppColors.textPrimary,
               ),
               title: Text(
-                '좋아요',
+                '좋아요한 프로젝트',
                 style: AppTypography.body1.copyWith(
                   color: AppColors.textPrimary,
                 ),
