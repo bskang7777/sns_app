@@ -62,12 +62,12 @@ dependencies:
   geolocator: ^10.1.0
   url_launcher: ^6.2.1
 
-  # Firebase (Optional for production)
-  firebase_core: ^2.24.2
-  firebase_auth: ^4.15.3
-  firebase_storage: ^11.5.6
-  firebase_analytics: ^10.7.4
-  firebase_crashlytics: ^3.4.8
+  # Firebase (Optional for production) - Temporarily disabled due to compatibility issues
+  # firebase_core: ^2.24.2
+  # firebase_auth: ^4.15.3
+  # firebase_storage: ^11.5.6
+  # firebase_analytics: ^10.7.4
+  # firebase_crashlytics: ^3.4.8
 
 dev_dependencies:
   flutter_test:
