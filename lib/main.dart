@@ -4,6 +4,10 @@ import 'package:go_router/go_router.dart';
 import 'package:sns_app/core/constants/app_colors.dart';
 import 'package:sns_app/core/constants/app_typography.dart';
 import 'package:sns_app/presentation/pages/feed_page.dart';
+import 'package:sns_app/presentation/pages/explore_page.dart';
+import 'package:sns_app/presentation/pages/create_post_page.dart';
+import 'package:sns_app/presentation/pages/activity_page.dart';
+import 'package:sns_app/presentation/pages/profile_page.dart';
 
 void main() {
   runApp(const ProviderScope(child: SnsApp()));
@@ -117,42 +121,5 @@ class _MainScreenState extends State<MainScreen> {
         ],
       ),
     );
-  }
-}
-
-// Placeholder pages for other tabs
-class ExplorePage extends StatelessWidget {
-  const ExplorePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text('Explore Page')));
-  }
-}
-
-class CreatePostPage extends StatelessWidget {
-  const CreatePostPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text('Create Post Page')));
-  }
-}
-
-class ActivityPage extends StatelessWidget {
-  const ActivityPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text('Activity Page')));
-  }
-}
-
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text('Profile Page')));
   }
 }
