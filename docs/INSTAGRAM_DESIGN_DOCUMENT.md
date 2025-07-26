@@ -11,6 +11,7 @@
 8. [보안 설계](#보안-설계)
 9. [테스트 전략](#테스트-전략)
 10. [배포 전략](#배포-전략)
+11. [퍼블리싱 가이드](#퍼블리싱-가이드)
 
 ---
 
@@ -24,12 +25,14 @@
 - Clean Architecture 기반 확장 가능한 구조
 - 크로스 플랫폼 지원 (iOS, Android, Web)
 - 실시간 소셜 기능 구현
+- **앱스토어 및 플레이스토어 퍼블리싱 완료**
 
 ### 핵심 가치
 - **사용자 중심**: 직관적이고 아름다운 UI/UX
 - **성능**: 빠른 로딩과 부드러운 애니메이션
 - **확장성**: 모듈화된 구조로 기능 추가 용이
 - **보안**: 사용자 데이터 보호 및 개인정보 보안
+- **배포 준비**: 퍼블리싱을 위한 완전한 준비
 
 ---
 
@@ -111,6 +114,12 @@
 - **Integration Testing**: Flutter Integration Test
 - **E2E Testing**: Flutter Driver
 - **API Testing**: Postman, Jest
+
+### Publishing
+- **iOS**: App Store Connect
+- **Android**: Google Play Console
+- **Code Signing**: Apple Developer Program, Google Play App Signing
+- **Distribution**: TestFlight, Internal Testing
 
 ---
 
@@ -646,8 +655,17 @@ jobs:
       - run: flutter build appbundle
       - uses: actions/upload-artifact@v3
 
+  build-ios:
+    needs: test
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+      - run: flutter build ios --release --no-codesign
+      - uses: actions/upload-artifact@v3
+
   deploy:
-    needs: build-android
+    needs: [build-android, build-ios]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
@@ -691,6 +709,405 @@ jobs:
 
 ---
 
+## 📱 퍼블리싱 가이드
+
+### 앱 퍼블리싱 준비사항
+
+#### 1. 앱 정보 설정
+
+##### pubspec.yaml 설정
+```yaml
+name: sns_app
+description: "Instagram Style SNS App - Share your moments with the world"
+version: 1.0.0+1
+publish_to: 'none'
+
+environment:
+  sdk: ^3.8.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  # 추가 의존성들...
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+```
+
+##### 앱 아이콘 설정
+```dart
+// android/app/src/main/res/mipmap-*/ic_launcher.png
+// ios/Runner/Assets.xcassets/AppIcon.appiconset/
+// 다양한 해상도별 아이콘 파일 필요
+```
+
+#### 2. Android 퍼블리싱 (Google Play Store)
+
+##### Android 설정 파일
+
+###### android/app/build.gradle.kts
+```kotlin
+android {
+    namespace = "com.example.sns_app"
+    compileSdk = 34
+    
+    defaultConfig {
+        applicationId = "com.example.sns_app"
+        minSdk = 21
+        targetSdk = 34
+        versionCode = 1
+        versionName = "1.0.0"
+        
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+    
+    buildTypes {
+        release {
+            isMinifyEnabled = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.getByName("release")
+        }
+    }
+    
+    signingConfigs {
+        create("release") {
+            keyAlias = System.getenv("KEY_ALIAS")
+            keyPassword = System.getenv("KEY_PASSWORD")
+            storeFile = file(System.getenv("KEYSTORE_PATH"))
+            storePassword = System.getenv("STORE_PASSWORD")
+        }
+    }
+}
+```
+
+###### android/app/src/main/AndroidManifest.xml
+```xml
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application
+        android:label="SNS App"
+        android:name="${applicationName}"
+        android:icon="@mipmap/ic_launcher"
+        android:allowBackup="true"
+        android:fullBackupContent="true"
+        android:dataExtractionRules="@xml/data_extraction_rules">
+        
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:theme="@style/LaunchTheme"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
+            android:windowSoftInputMode="adjustResize">
+            
+            <meta-data
+                android:name="io.flutter.embedding.android.NormalTheme"
+                android:resource="@style/NormalTheme" />
+            
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        
+        <meta-data
+            android:name="flutterEmbedding"
+            android:value="2" />
+    </application>
+    
+    <!-- 권한 설정 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+</manifest>
+```
+
+##### Google Play Console 설정
+
+###### 앱 정보
+- **앱 이름**: SNS App
+- **간단한 설명**: Instagram 스타일 소셜 네트워킹 앱
+- **상세 설명**: 
+```
+Instagram 스타일의 소셜 네트워킹 앱입니다.
+
+주요 기능:
+• 사진과 비디오 공유
+• 스토리 기능
+• 실시간 피드
+• 사용자 검색 및 팔로우
+• 댓글 및 좋아요
+• 개인 메시징
+• 위치 태그
+
+Clean Architecture 기반으로 개발되어 안정적이고 확장 가능한 구조를 가지고 있습니다.
+```
+
+###### 앱 카테고리
+- **주 카테고리**: 소셜
+- **보조 카테고리**: 사진/비디오
+
+###### 콘텐츠 등급
+- **연령 등급**: 3세 이상
+- **콘텐츠 설명**: 사용자 생성 콘텐츠 포함
+
+###### 개인정보처리방침
+```
+개인정보처리방침
+
+1. 수집하는 개인정보
+- 계정 정보 (이메일, 사용자명)
+- 프로필 정보 (이름, 생년월일, 프로필 사진)
+- 게시물 및 댓글
+- 위치 정보 (선택적)
+
+2. 개인정보의 이용
+- 서비스 제공 및 개선
+- 사용자 경험 향상
+- 보안 및 사기 방지
+
+3. 개인정보의 보호
+- 암호화 저장 및 전송
+- 접근 권한 제한
+- 정기적인 보안 점검
+
+4. 사용자 권리
+- 개인정보 조회, 수정, 삭제
+- 동의 철회
+- 데이터 이전
+
+5. 문의처
+- 이메일: privacy@snsapp.com
+- 전화: 02-1234-5678
+```
+
+#### 3. iOS 퍼블리싱 (App Store)
+
+##### iOS 설정 파일
+
+###### ios/Runner/Info.plist
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>$(DEVELOPMENT_LANGUAGE)</string>
+    <key>CFBundleDisplayName</key>
+    <string>SNS App</string>
+    <key>CFBundleExecutable</key>
+    <string>$(EXECUTABLE_NAME)</string>
+    <key>CFBundleIdentifier</key>
+    <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>sns_app</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>$(FLUTTER_BUILD_NAME)</string>
+    <key>CFBundleSignature</key>
+    <string>????</string>
+    <key>CFBundleVersion</key>
+    <string>$(FLUTTER_BUILD_NUMBER)</string>
+    <key>LSRequiresIPhoneOS</key>
+    <true/>
+    <key>UILaunchStoryboardName</key>
+    <string>LaunchScreen</string>
+    <key>UIMainStoryboardFile</key>
+    <string>Main</string>
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+    <key>UISupportedInterfaceOrientations~ipad</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+        <string>UIInterfaceOrientationPortraitUpsideDown</string>
+        <string>UIInterfaceOrientationLandscapeLeft</string>
+        <string>UIInterfaceOrientationLandscapeRight</string>
+    </array>
+    <key>UIViewControllerBasedStatusBarAppearance</key>
+    <false/>
+    <key>CADisableMinimumFrameDurationOnPhone</key>
+    <true/>
+    <key>UIApplicationSupportsIndirectInputEvents</key>
+    <true/>
+    
+    <!-- 권한 설명 -->
+    <key>NSCameraUsageDescription</key>
+    <string>사진과 비디오를 촬영하여 공유하기 위해 카메라 접근 권한이 필요합니다.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>갤러리에서 사진을 선택하여 공유하기 위해 사진 라이브러리 접근 권한이 필요합니다.</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>게시물에 위치 정보를 추가하기 위해 위치 접근 권한이 필요합니다.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>비디오 촬영 시 오디오를 녹음하기 위해 마이크 접근 권한이 필요합니다.</string>
+</dict>
+</plist>
+```
+
+###### ios/Runner.xcodeproj/project.pbxproj
+```
+// Bundle Identifier 설정
+PRODUCT_BUNDLE_IDENTIFIER = com.example.snsApp;
+```
+
+##### App Store Connect 설정
+
+###### 앱 정보
+- **앱 이름**: SNS App
+- **부제목**: Instagram 스타일 소셜 네트워킹
+- **키워드**: 소셜, 사진, 비디오, 공유, 커뮤니티
+- **설명**:
+```
+Instagram 스타일의 소셜 네트워킹 앱
+
+📸 사진과 비디오 공유
+• 고품질 이미지 및 비디오 업로드
+• 다양한 필터와 편집 도구
+• 멀티미디어 캐러셀 지원
+
+📱 스토리 기능
+• 24시간 임시 스토리
+• 스토리 하이라이트
+• 인터랙티브 스티커와 텍스트
+
+🔍 탐색 및 검색
+• 해시태그 기반 검색
+• 사용자 및 위치 검색
+• 트렌딩 콘텐츠 발견
+
+💬 소셜 기능
+• 댓글 및 답글
+• 좋아요 및 북마크
+• 실시간 알림
+• 개인 메시징
+
+👤 프로필 관리
+• 커스터마이징 가능한 프로필
+• 팔로워/팔로잉 관리
+• 개인정보 설정
+
+🔒 보안 및 개인정보
+• 안전한 인증 시스템
+• 개인정보 보호
+• 콘텐츠 신고 기능
+
+Clean Architecture 기반으로 개발되어 안정적이고 확장 가능한 구조를 가지고 있습니다.
+```
+
+###### 앱 카테고리
+- **주 카테고리**: 소셜 네트워킹
+- **보조 카테고리**: 사진 및 비디오
+
+###### 연령 등급
+- **연령 등급**: 4+
+- **콘텐츠 설명**: 사용자 생성 콘텐츠, 소셜 네트워킹
+
+#### 4. 빌드 및 서명
+
+##### Android 빌드
+```bash
+# Release APK 빌드
+flutter build apk --release
+
+# App Bundle 빌드 (권장)
+flutter build appbundle --release
+
+# 서명된 APK 빌드
+flutter build apk --release --split-per-abi
+```
+
+##### iOS 빌드
+```bash
+# Release 빌드
+flutter build ios --release
+
+# Archive 생성 (Xcode에서)
+# Product > Archive
+```
+
+##### 코드 서명
+
+###### Android 서명
+```bash
+# 키스토어 생성
+keytool -genkey -v -keystore ~/upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload
+
+# 서명 설정
+# android/key.properties 파일 생성
+storePassword=<password>
+keyPassword=<password>
+keyAlias=upload
+storeFile=<location of the keystore file>
+```
+
+###### iOS 서명
+- Apple Developer Program 가입
+- App Store Connect에서 앱 등록
+- Xcode에서 자동 서명 설정
+- Provisioning Profile 설정
+
+#### 5. 테스트 배포
+
+##### Android 테스트
+- **Internal Testing**: 개발팀 내부 테스트
+- **Closed Testing**: 제한된 사용자 그룹
+- **Open Testing**: 공개 베타 테스트
+
+##### iOS 테스트
+- **TestFlight**: Apple의 베타 테스트 플랫폼
+- **Internal Testing**: 개발팀 내부
+- **External Testing**: 외부 사용자
+
+#### 6. 스토어 심사 준비
+
+##### 필수 준비사항
+- [x] 앱 아이콘 (다양한 해상도)
+- [x] 스크린샷 (다양한 디바이스)
+- [x] 앱 설명 및 키워드
+- [x] 개인정보처리방침
+- [x] 사용자 가이드
+- [x] 연락처 정보
+- [x] 콘텐츠 등급
+- [x] 앱 권한 설명
+
+##### 심사 체크리스트
+- [ ] 앱이 정상적으로 실행됨
+- [ ] 모든 기능이 작동함
+- [ ] 크래시나 버그 없음
+- [ ] 개인정보 보호 준수
+- [ ] 적절한 콘텐츠 필터링
+- [ ] 사용자 신고 기능
+- [ ] 접근성 지원
+- [ ] 성능 최적화
+
+#### 7. 출시 후 관리
+
+##### 모니터링
+- **앱 성능**: Firebase Performance
+- **오류 추적**: Sentry, Firebase Crashlytics
+- **사용자 분석**: Firebase Analytics
+- **스토어 리뷰**: Google Play Console, App Store Connect
+
+##### 업데이트 전략
+- **정기 업데이트**: 월 1-2회
+- **핫픽스**: 긴급 버그 수정
+- **기능 업데이트**: 새로운 기능 추가
+- **성능 개선**: 최적화 및 안정성 향상
+
+---
+
 ## 📈 성능 최적화
 
 ### Frontend Optimization
@@ -720,18 +1137,21 @@ jobs:
 - [x] 피드 및 포스트 기능
 - [x] 프로필 관리
 - [ ] 기본 스토리 기능
+- [x] **앱스토어/플레이스토어 퍼블리싱 준비**
 
 ### Phase 2 (Enhanced) - 6개월
 - [ ] 실시간 메시징
 - [ ] 라이브 스트리밍
 - [ ] 고급 검색 기능
 - [ ] 쇼핑 기능
+- [ ] **스토어 최적화 및 마케팅**
 
 ### Phase 3 (Advanced) - 12개월
 - [ ] AI 기반 콘텐츠 추천
 - [ ] AR 필터 및 효과
 - [ ] 크리에이터 도구
 - [ ] 비즈니스 계정 기능
+- [ ] **글로벌 확장**
 
 ---
 
@@ -740,6 +1160,8 @@ jobs:
 - **GitHub Repository**: [https://github.com/bskang7777/sns_app](https://github.com/bskang7777/sns_app)
 - **Documentation**: [https://github.com/bskang7777/sns_app/docs](https://github.com/bskang7777/sns_app/docs)
 - **Issues**: [https://github.com/bskang7777/sns_app/issues](https://github.com/bskang7777/sns_app/issues)
+- **App Store**: [링크 예정]
+- **Google Play**: [링크 예정]
 
 ---
 
