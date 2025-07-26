@@ -304,4 +304,276 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
       ),
     );
   }
+
+  Widget _buildAdvancedOptions() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '고급 옵션',
+          style: AppTypography.body1.copyWith(
+            fontWeight: FontWeight.w600,
+            color: AppColors.textPrimary,
+          ),
+        ),
+        const SizedBox(height: 12),
+
+        // Content Type Selection
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: AppColors.backgroundSecondary,
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: AppColors.textTertiary),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '콘텐츠 유형',
+                style: AppTypography.body2.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                children: [
+                  _buildContentTypeChip('AI 프로젝트', true),
+                  _buildContentTypeChip('프리젠테이션', false),
+                  _buildContentTypeChip('코드 스니펫', false),
+                  _buildContentTypeChip('연구 결과', false),
+                  _buildContentTypeChip('강의 자료', false),
+                  _buildContentTypeChip('컨퍼런스', false),
+                ],
+              ),
+            ],
+          ),
+        ),
+
+        const SizedBox(height: 16),
+
+        // Presentation Options
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: AppColors.backgroundSecondary,
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: AppColors.textTertiary),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '프리젠테이션 옵션',
+                style: AppTypography.body2.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+              const SizedBox(height: 12),
+
+              // Slide Count
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      '슬라이드 수',
+                      style: AppTypography.body2.copyWith(
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: AppColors.background,
+                      borderRadius: BorderRadius.circular(4),
+                      border: Border.all(color: AppColors.textTertiary),
+                    ),
+                    child: Text(
+                      '15장',
+                      style: AppTypography.body2.copyWith(
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 8),
+
+              // Presentation Duration
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      '발표 시간',
+                      style: AppTypography.body2.copyWith(
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: AppColors.background,
+                      borderRadius: BorderRadius.circular(4),
+                      border: Border.all(color: AppColors.textTertiary),
+                    ),
+                    child: Text(
+                      '30분',
+                      style: AppTypography.body2.copyWith(
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 8),
+
+              // Conference Info
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      '컨퍼런스',
+                      style: AppTypography.body2.copyWith(
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: AppColors.background,
+                      borderRadius: BorderRadius.circular(4),
+                      border: Border.all(color: AppColors.textTertiary),
+                    ),
+                    child: Text(
+                      '부산 AI 컨퍼런스 2024',
+                      style: AppTypography.body2.copyWith(
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+
+        const SizedBox(height: 16),
+
+        // Code Snippet Options
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: AppColors.backgroundSecondary,
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: AppColors.textTertiary),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '코드 스니펫 옵션',
+                style: AppTypography.body2.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimary,
+                ),
+              ),
+              const SizedBox(height: 8),
+
+              // Programming Language
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      '프로그래밍 언어',
+                      style: AppTypography.body2.copyWith(
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: AppColors.background,
+                      borderRadius: BorderRadius.circular(4),
+                      border: Border.all(color: AppColors.textTertiary),
+                    ),
+                    child: Text(
+                      'Python',
+                      style: AppTypography.body2.copyWith(
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 8),
+
+              // Framework
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      '프레임워크',
+                      style: AppTypography.body2.copyWith(
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: AppColors.background,
+                      borderRadius: BorderRadius.circular(4),
+                      border: Border.all(color: AppColors.textTertiary),
+                    ),
+                    child: Text(
+                      'TensorFlow',
+                      style: AppTypography.body2.copyWith(
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildContentTypeChip(String label, bool isSelected) {
+    return FilterChip(
+      label: Text(
+        label,
+        style: AppTypography.caption.copyWith(
+          color: isSelected ? Colors.white : AppColors.textPrimary,
+        ),
+      ),
+      selected: isSelected,
+      onSelected: (selected) {
+        // TODO: Implement content type selection
+      },
+      backgroundColor: AppColors.background,
+      selectedColor: AppColors.primary,
+      checkmarkColor: Colors.white,
+      side: BorderSide(
+        color: isSelected ? AppColors.primary : AppColors.textTertiary,
+      ),
+    );
+  }
 }

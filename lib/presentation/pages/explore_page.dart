@@ -90,7 +90,7 @@ class _ExplorePageState extends ConsumerState<ExplorePage> {
       child: TextField(
         controller: _searchController,
         decoration: InputDecoration(
-          hintText: '검색',
+          hintText: 'AI 기술, 프로젝트, 프리젠테이션 검색...',
           hintStyle: AppTypography.body2.copyWith(
             color: AppColors.textSecondary,
           ),
@@ -148,7 +148,7 @@ class _ExplorePageState extends ConsumerState<ExplorePage> {
                 color: AppColors.background,
                 image: DecorationImage(
                   image: AssetImage(
-                    'assets/images/sample_post_${(index % 3) + 1}.jpg',
+                    _getStoryImage(index),
                   ),
                   fit: BoxFit.cover,
                 ),
@@ -157,7 +157,7 @@ class _ExplorePageState extends ConsumerState<ExplorePage> {
           ),
           const SizedBox(height: 4),
           Text(
-            'user_$index',
+            _getStoryUsername(index),
             style: AppTypography.caption.copyWith(
               color: AppColors.textPrimary,
               fontSize: 10,
@@ -169,6 +169,34 @@ class _ExplorePageState extends ConsumerState<ExplorePage> {
         ],
       ),
     );
+  }
+
+  String _getStoryImage(int index) {
+    final images = [
+      'assets/images/ai_project_1.jpg',
+      'assets/images/presentation_1.jpg',
+      'assets/images/ai_project_2.jpg',
+      'assets/images/presentation_2.jpg',
+      'assets/images/ai_project_3.jpg',
+      'assets/images/presentation_3.jpg',
+      'assets/images/presentation_4.jpg',
+      'assets/images/user_avatar_1.jpg',
+    ];
+    return images[index % images.length];
+  }
+
+  String _getStoryUsername(int index) {
+    final usernames = [
+      'ai_researcher',
+      'presentation_expert',
+      'ml_engineer',
+      'data_scientist',
+      'ai_lecturer',
+      'research_team',
+      'ai_developer',
+      'tech_speaker',
+    ];
+    return usernames[index % usernames.length];
   }
 
   Widget _buildPostsGrid() {
@@ -199,7 +227,7 @@ class _ExplorePageState extends ConsumerState<ExplorePage> {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              'assets/images/sample_post_${(index % 3) + 1}.jpg',
+              _getGridImage(index),
             ),
             fit: BoxFit.cover,
           ),
@@ -242,10 +270,43 @@ class _ExplorePageState extends ConsumerState<ExplorePage> {
                     ),
                   ),
                 ),
+              if (index % 3 == 0) // Some posts have presentation indicator
+                Positioned(
+                  top: 8,
+                  left: 8,
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: Colors.blue.withOpacity(0.8),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: const Icon(
+                      Icons.slideshow,
+                      color: Colors.white,
+                      size: 16,
+                    ),
+                  ),
+                ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  String _getGridImage(int index) {
+    final images = [
+      'assets/images/ai_project_1.jpg',
+      'assets/images/presentation_1.jpg',
+      'assets/images/ai_project_2.jpg',
+      'assets/images/presentation_2.jpg',
+      'assets/images/ai_project_3.jpg',
+      'assets/images/presentation_3.jpg',
+      'assets/images/presentation_4.jpg',
+      'assets/images/user_avatar_1.jpg',
+      'assets/images/user_avatar_2.jpg',
+      'assets/images/profile_avatar.jpg',
+    ];
+    return images[index % images.length];
   }
 }

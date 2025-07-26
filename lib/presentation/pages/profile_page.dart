@@ -328,7 +328,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              'assets/images/ai_project_${(index % 3) + 1}.jpg',
+              _getProfileImage(index),
             ),
             fit: BoxFit.cover,
           ),
@@ -371,6 +371,23 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
                     ),
                   ),
                 ),
+              if (index % 3 == 0) // Some posts have presentation indicator
+                Positioned(
+                  top: 8,
+                  left: 8,
+                  child: Container(
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: Colors.blue.withOpacity(0.8),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: const Icon(
+                      Icons.slideshow,
+                      color: Colors.white,
+                      size: 16,
+                    ),
+                  ),
+                ),
             ],
           ),
         ),
@@ -387,7 +404,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              'assets/images/ai_project_${(index % 3) + 1}.jpg',
+              _getProfileImage(index),
             ),
             fit: BoxFit.cover,
           ),
@@ -405,13 +422,29 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              'assets/images/ai_project_${(index % 3) + 1}.jpg',
+              _getProfileImage(index),
             ),
             fit: BoxFit.cover,
           ),
         ),
       ),
     );
+  }
+
+  String _getProfileImage(int index) {
+    final images = [
+      'assets/images/ai_project_1.jpg',
+      'assets/images/presentation_1.jpg',
+      'assets/images/ai_project_2.jpg',
+      'assets/images/presentation_2.jpg',
+      'assets/images/ai_project_3.jpg',
+      'assets/images/presentation_3.jpg',
+      'assets/images/presentation_4.jpg',
+      'assets/images/user_avatar_1.jpg',
+      'assets/images/user_avatar_2.jpg',
+      'assets/images/profile_avatar.jpg',
+    ];
+    return images[index % images.length];
   }
 
   void _showProfileOptions() {

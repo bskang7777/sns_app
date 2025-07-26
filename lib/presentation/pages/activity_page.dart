@@ -98,6 +98,9 @@ class _ActivityPageState extends ConsumerState<ActivityPage>
       'nature_photographer',
       'art_creator',
       'fitness_guru',
+      'presentation_expert_choi',
+      'ai_lecturer_kang',
+      'research_team_kim',
     ];
     final username = usernames[index % usernames.length];
 
@@ -195,6 +198,9 @@ class _ActivityPageState extends ConsumerState<ActivityPage>
       'nature_photographer',
       'art_creator',
       'fitness_guru',
+      'presentation_expert_choi',
+      'ai_lecturer_kang',
+      'research_team_kim',
     ];
     final username = usernames[index % usernames.length];
     final isMultiple = index % 4 == 0; // Some items show multiple users
@@ -225,9 +231,8 @@ class _ActivityPageState extends ConsumerState<ActivityPage>
                     ),
                     children: [
                       TextSpan(
-                        text: isMultiple
-                            ? '$username 외 ${index + 2}명'
-                            : username,
+                        text:
+                            isMultiple ? '$username 외 ${index + 2}명' : username,
                         style: const TextStyle(fontWeight: FontWeight.w600),
                       ),
                       const TextSpan(text: '님이 회원님의 게시물을 좋아합니다.'),
@@ -253,7 +258,7 @@ class _ActivityPageState extends ConsumerState<ActivityPage>
               borderRadius: BorderRadius.circular(4),
               image: DecorationImage(
                 image: AssetImage(
-                  'assets/images/sample_post_${(index % 3) + 1}.jpg',
+                  _getActivityImage(index),
                 ),
                 fit: BoxFit.cover,
               ),
@@ -262,5 +267,21 @@ class _ActivityPageState extends ConsumerState<ActivityPage>
         ],
       ),
     );
+  }
+
+  String _getActivityImage(int index) {
+    final images = [
+      'assets/images/ai_project_1.jpg',
+      'assets/images/presentation_1.jpg',
+      'assets/images/ai_project_2.jpg',
+      'assets/images/presentation_2.jpg',
+      'assets/images/ai_project_3.jpg',
+      'assets/images/presentation_3.jpg',
+      'assets/images/presentation_4.jpg',
+      'assets/images/user_avatar_1.jpg',
+      'assets/images/user_avatar_2.jpg',
+      'assets/images/profile_avatar.jpg',
+    ];
+    return images[index % images.length];
   }
 }
