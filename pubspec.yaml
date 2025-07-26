@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.8.1
+  sdk: '>=3.4.0 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -108,21 +108,22 @@ flutter:
     - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/to/resolution-aware-images
+  # https://flutter.dev/assets-and-images/#resolution-aware.
 
   # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/to/asset-from-package
+  # https://flutter.dev/assets-and-images/#from-packages
 
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  #   - family: Instagram
-  #     fonts:
-  #       - asset: assets/fonts/Instagram-Regular.ttf
-  #       - asset: assets/fonts/Instagram-Bold.ttf
-  #         weight: 700
+  #   fonts:
+  #     - family: Schyler
+  #       fonts:
+  #         - asset: fonts/Schyler-Regular.ttf
+  #         - asset: fonts/Schyler-Italic.ttf
+  #           style: italic
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
@@ -130,4 +131,11 @@ flutter:
   #         weight: 700
   #
   # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/to/font-from-package
+  # see https://flutter.dev/custom-fonts/#from-packages
+
+  # Custom fonts - Temporarily disabled due to missing font files
+  #   - family: Instagram
+  #     fonts:
+  #       - asset: assets/fonts/Instagram-Regular.ttf
+  #       - asset: assets/fonts/Instagram-Bold.ttf
+  #         weight: 700
