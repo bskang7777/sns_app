@@ -69,7 +69,7 @@ class StoryList extends StatelessWidget {
 
           // Username
           Text(
-            isAddStory ? '내 스토리' : 'user_$index',
+            isAddStory ? '내 스토리' : 'ai_tool_user_$index',
             style: AppTypography.caption.copyWith(
               color: AppColors.textPrimary,
               fontSize: 10,
@@ -84,11 +84,14 @@ class StoryList extends StatelessWidget {
   }
 
   String _getAvatarImage(int index) {
-    // 존재하는 이미지 파일만 사용
+    // AI TOOL 관련 이미지들
     final availableImages = [
-      'assets/images/user_avatar_1.jpg',
-      'assets/images/user_avatar_2.jpg',
-      'assets/images/profile_avatar.jpg',
+      'assets/images/mcp_developer.jpg',
+      'assets/images/llm_expert.jpg',
+      'assets/images/cursor_engineer.jpg',
+      'assets/images/n8n_scientist.jpg',
+      'assets/images/claude_lecturer.jpg',
+      'assets/images/ai_tool_team.jpg',
     ];
 
     // 인덱스를 사용 가능한 이미지 개수로 나눈 나머지를 사용

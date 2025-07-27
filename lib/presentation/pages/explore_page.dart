@@ -90,7 +90,7 @@ class _ExplorePageState extends ConsumerState<ExplorePage> {
       child: TextField(
         controller: _searchController,
         decoration: InputDecoration(
-          hintText: 'AI 기술, 프로젝트, 프리젠테이션 검색...',
+          hintText: 'AI TOOL 기술, 프로젝트, 프리젠테이션 검색...',
           hintStyle: AppTypography.body2.copyWith(
             color: AppColors.textSecondary,
           ),
@@ -173,28 +173,28 @@ class _ExplorePageState extends ConsumerState<ExplorePage> {
 
   String _getStoryImage(int index) {
     final images = [
-      'assets/images/ai_project_1.jpg',
-      'assets/images/presentation_1.jpg',
-      'assets/images/ai_project_2.jpg',
-      'assets/images/presentation_2.jpg',
-      'assets/images/ai_project_3.jpg',
-      'assets/images/presentation_3.jpg',
-      'assets/images/presentation_4.jpg',
-      'assets/images/user_avatar_1.jpg',
+      'assets/images/mcp_tool.jpg',
+      'assets/images/llm_presentation.jpg',
+      'assets/images/cursor_tool.jpg',
+      'assets/images/n8n_workflow.jpg',
+      'assets/images/claude_tutorial.jpg',
+      'assets/images/ai_tool_dashboard.jpg',
+      'assets/images/mcp_developer.jpg',
+      'assets/images/llm_expert.jpg',
     ];
     return images[index % images.length];
   }
 
   String _getStoryUsername(int index) {
     final usernames = [
-      'ai_researcher',
-      'presentation_expert',
-      'ml_engineer',
-      'data_scientist',
-      'ai_lecturer',
-      'research_team',
-      'ai_developer',
-      'tech_speaker',
+      'mcp_researcher',
+      'llm_expert',
+      'cursor_engineer',
+      'n8n_scientist',
+      'claude_lecturer',
+      'ai_tool_team',
+      'mcp_developer',
+      'llm_speaker',
     ];
     return usernames[index % usernames.length];
   }
@@ -296,16 +296,16 @@ class _ExplorePageState extends ConsumerState<ExplorePage> {
 
   String _getGridImage(int index) {
     final images = [
-      'assets/images/ai_project_1.jpg',
-      'assets/images/presentation_1.jpg',
-      'assets/images/ai_project_2.jpg',
-      'assets/images/presentation_2.jpg',
-      'assets/images/ai_project_3.jpg',
-      'assets/images/presentation_3.jpg',
-      'assets/images/presentation_4.jpg',
-      'assets/images/user_avatar_1.jpg',
-      'assets/images/user_avatar_2.jpg',
-      'assets/images/profile_avatar.jpg',
+      'assets/images/mcp_tool.jpg',
+      'assets/images/llm_presentation.jpg',
+      'assets/images/cursor_tool.jpg',
+      'assets/images/n8n_workflow.jpg',
+      'assets/images/claude_tutorial.jpg',
+      'assets/images/ai_tool_dashboard.jpg',
+      'assets/images/mcp_developer.jpg',
+      'assets/images/llm_expert.jpg',
+      'assets/images/cursor_engineer.jpg',
+      'assets/images/n8n_scientist.jpg',
     ];
     return images[index % images.length];
   }

@@ -56,7 +56,7 @@ class _FeedPageState extends ConsumerState<FeedPage> {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         title: Text(
-          '동네AI개발자',
+          'AI TOOL 개발자',
           style: AppTypography.headline3.copyWith(
             color: AppColors.textPrimary,
             fontWeight: FontWeight.bold,
@@ -123,52 +123,56 @@ class _FeedPageState extends ConsumerState<FeedPage> {
     // TODO: Replace with actual data from provider
     final List<Map<String, dynamic>> mockPosts = [
       {
-        'username': 'ai_researcher_kim',
-        'location': '서울 AI 연구소',
-        'avatar': 'assets/images/user_avatar_1.jpg',
-        'image': 'assets/images/ai_project_1.jpg',
+        'username': 'ai_tool_developer_kim',
+        'location': '서울 송파구 AI TOOL 연구소',
+        'avatar': 'assets/images/mcp_developer.jpg',
+        'image': 'assets/images/mcp_tool.jpg',
         'likes': 245,
-        'caption': '새로운 Transformer 모델 실험 결과! 🧠 #AI #Transformer #NLP #딥러닝',
+        'caption': '새로운 MCP AI TOOL 개발 완료! 🛠️ #MCP #AITOOL #개발 #플러그인 #자동화',
       },
       {
-        'username': 'presentation_expert_choi',
-        'location': '부산 AI 컨퍼런스',
-        'avatar': 'assets/images/user_avatar_2.jpg',
-        'image': 'assets/images/presentation_1.jpg',
+        'username': 'ai_tool_expert_choi',
+        'location': '서울 강남구 AI TOOL 컨퍼런스',
+        'avatar': 'assets/images/llm_expert.jpg',
+        'image': 'assets/images/llm_presentation.jpg',
         'likes': 189,
-        'caption': '오늘 AI 컨퍼런스에서 발표한 내용입니다! 📊 #AI컨퍼런스 #프리젠테이션 #기술공유',
+        'caption':
+            '오늘 LLM AI TOOL 컨퍼런스에서 발표한 내용입니다! 📊 #LLM #AITOOL컨퍼런스 #프리젠테이션 #기술공유',
       },
       {
-        'username': 'ml_engineer_park',
-        'location': '부산 ML 엔지니어링팀',
-        'avatar': 'assets/images/profile_avatar.jpg',
-        'image': 'assets/images/ai_project_2.jpg',
+        'username': 'ai_tool_engineer_park',
+        'location': '서울 강동구 AI TOOL 엔지니어링팀',
+        'avatar': 'assets/images/cursor_engineer.jpg',
+        'image': 'assets/images/cursor_tool.jpg',
         'likes': 567,
-        'caption': '컴퓨터 비전 프로젝트 완성! 🖼️ #ComputerVision #OpenCV #Python #AI',
+        'caption':
+            'Cursor AI TOOL 플러그인 프로젝트 완성! 🔌 #Cursor #AITOOL #플러그인 #개발 #자동화',
       },
       {
-        'username': 'data_scientist_lee',
-        'location': '대구 데이터 사이언스팀',
-        'avatar': 'assets/images/user_avatar_1.jpg',
-        'image': 'assets/images/presentation_2.jpg',
+        'username': 'ai_tool_scientist_lee',
+        'location': '서울 마천동 AI TOOL 사이언스팀',
+        'avatar': 'assets/images/n8n_scientist.jpg',
+        'image': 'assets/images/n8n_workflow.jpg',
         'likes': 432,
-        'caption': '데이터 사이언스 워크샵 자료 공유합니다! 📈 #데이터사이언스 #워크샵 #프리젠테이션',
+        'caption':
+            'n8n AI TOOL 개발 워크샵 자료 공유합니다! 📈 #n8n #AITOOL개발 #워크샵 #프리젠테이션',
       },
       {
-        'username': 'ai_lecturer_kang',
-        'location': '서울 AI 아카데미',
-        'avatar': 'assets/images/user_avatar_2.jpg',
-        'image': 'assets/images/presentation_3.jpg',
+        'username': 'ai_tool_lecturer_kang',
+        'location': '서울 송파구 AI TOOL 아카데미',
+        'avatar': 'assets/images/claude_lecturer.jpg',
+        'image': 'assets/images/claude_tutorial.jpg',
         'likes': 678,
-        'caption': 'AI 입문자를 위한 기초 강의 자료입니다! 🎓 #AI입문 #강의자료 #교육',
+        'caption':
+            'Claude AI TOOL 입문자를 위한 기초 강의 자료입니다! 🎓 #Claude #AITOOL입문 #강의자료 #교육',
       },
       {
-        'username': 'research_team_kim',
-        'location': '대전 AI 연구센터',
-        'avatar': 'assets/images/profile_avatar.jpg',
-        'image': 'assets/images/presentation_4.jpg',
+        'username': 'ai_tool_team_kim',
+        'location': '서울 강남구 AI TOOL 연구센터',
+        'avatar': 'assets/images/ai_tool_team.jpg',
+        'image': 'assets/images/ai_tool_dashboard.jpg',
         'likes': 345,
-        'caption': '최신 AI 연구 동향 발표 자료! 🔬 #AI연구 #트렌드 #발표자료',
+        'caption': '최신 AI TOOL 개발 동향 발표 자료! 🔬 #AITOOL개발 #트렌드 #발표자료',
       },
     ];
 

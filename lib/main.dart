@@ -8,6 +8,7 @@ import 'package:sns_app/presentation/pages/explore_page.dart';
 import 'package:sns_app/presentation/pages/create_post_page.dart';
 import 'package:sns_app/presentation/pages/activity_page.dart';
 import 'package:sns_app/presentation/pages/profile_page.dart';
+import 'package:sns_app/presentation/pages/presentation_page.dart';
 
 void main() {
   runApp(const ProviderScope(child: SnsApp()));

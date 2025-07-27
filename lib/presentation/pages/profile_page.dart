@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sns_app/core/constants/app_colors.dart';
 import 'package:sns_app/core/constants/app_typography.dart';
+import 'package:sns_app/presentation/pages/presentation_page.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
   const ProfilePage({super.key});
@@ -115,7 +116,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
           CircleAvatar(
             radius: 40,
             backgroundImage: const AssetImage(
-              'assets/images/profile_avatar.jpg',
+              'assets/images/mcp_developer.jpg',
             ),
             child: Container(
               decoration: BoxDecoration(
@@ -132,7 +133,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _buildStatItem('AI 프로젝트', '42'),
+                _buildStatItem('AI TOOL 프로젝트', '42'),
                 _buildStatItem('팔로워', '1.2K'),
                 _buildStatItem('팔로우', '890'),
               ],
@@ -171,7 +172,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '김AI개발자',
+                  '김AI TOOL 개발자',
                   style: AppTypography.body1.copyWith(
                     fontWeight: FontWeight.w600,
                     color: AppColors.textPrimary,
@@ -179,7 +180,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'AI/ML 엔지니어 | 딥러닝 연구원 | 컴퓨터 비전 전문가',
+                  'AI TOOL 엔지니어 | AI TOOL 연구원 | AI TOOL 전문가',
                   style: AppTypography.body2.copyWith(
                     color: AppColors.textPrimary,
                   ),
@@ -199,22 +200,22 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '🧠 딥러닝 모델 개발 및 연구',
+            '🛠️ AI TOOL 개발 및 연구',
             style: AppTypography.body2.copyWith(color: AppColors.textPrimary),
           ),
           const SizedBox(height: 4),
           Text(
-            '📊 데이터 사이언스 & 머신러닝',
+            '📊 AI TOOL 데이터 분석 & 머신러닝',
             style: AppTypography.body2.copyWith(color: AppColors.textPrimary),
           ),
           const SizedBox(height: 4),
           Text(
-            '🖼️ 컴퓨터 비전 & 이미지 처리',
+            '🔌 AI TOOL 플러그인 & 확장 기능',
             style: AppTypography.body2.copyWith(color: AppColors.textPrimary),
           ),
           const SizedBox(height: 4),
           Text(
-            '🤖 자연어 처리 & NLP',
+            '🤖 AI TOOL 자동화 & 워크플로우',
             style: AppTypography.body2.copyWith(color: AppColors.textPrimary),
           ),
         ],
@@ -433,16 +434,16 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
 
   String _getProfileImage(int index) {
     final images = [
-      'assets/images/ai_project_1.jpg',
-      'assets/images/presentation_1.jpg',
-      'assets/images/ai_project_2.jpg',
-      'assets/images/presentation_2.jpg',
-      'assets/images/ai_project_3.jpg',
-      'assets/images/presentation_3.jpg',
-      'assets/images/presentation_4.jpg',
-      'assets/images/user_avatar_1.jpg',
-      'assets/images/user_avatar_2.jpg',
-      'assets/images/profile_avatar.jpg',
+      'assets/images/mcp_tool.jpg',
+      'assets/images/llm_presentation.jpg',
+      'assets/images/cursor_tool.jpg',
+      'assets/images/n8n_workflow.jpg',
+      'assets/images/claude_tutorial.jpg',
+      'assets/images/ai_tool_dashboard.jpg',
+      'assets/images/mcp_developer.jpg',
+      'assets/images/llm_expert.jpg',
+      'assets/images/cursor_engineer.jpg',
+      'assets/images/n8n_scientist.jpg',
     ];
     return images[index % images.length];
   }
@@ -482,6 +483,27 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
               onTap: () {
                 Navigator.pop(context);
                 // TODO: Navigate to saved posts
+              },
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.slideshow_outlined,
+                color: AppColors.textPrimary,
+              ),
+              title: Text(
+                'AI TOOL 모임 프리젠테이션',
+                style: AppTypography.body1.copyWith(
+                  color: AppColors.textPrimary,
+                ),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PresentationPage(),
+                  ),
+                );
               },
             ),
             ListTile(

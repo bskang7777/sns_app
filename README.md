@@ -1,26 +1,39 @@
-# 동네AI개발자 모임 SNS App
+# AI TOOL 개발자 모임 SNS App
 
-AI 개발자들을 위한 Instagram 스타일 소셜 네트워킹 서비스 앱입니다. Flutter와 Clean Architecture를 사용하여 개발되었습니다.
+AI TOOL 개발자들을 위한 Instagram 스타일 소셜 네트워킹 서비스 앱입니다. Flutter와 Clean Architecture를 사용하여 개발되었습니다.
 
 ## 🌐 라이브 데모
 
 **GitHub Pages에서 실행 중**: [https://bskang7777.github.io/sns_app/](https://bskang7777.github.io/sns_app/)
 
-## 🤖 AI 개발자들을 위한 특별한 기능
+## 🤖 AI TOOL 개발자들을 위한 특별한 기능
 
 ### ✅ 구현된 기능
-- **Feed Page**: AI 프로젝트 공유, 기술 토론, 스토리
-- **Explore Page**: AI 기술 검색, 프로젝트 발견, 트렌드 탐색
-- **Create Post Page**: AI 프로젝트 업로드, 코드 스니펫 공유
-- **Activity Page**: AI 개발자 팔로우, 프로젝트 좋아요 알림
-- **Profile Page**: AI 개발자 프로필, 포트폴리오, 기술 스택
+- **Feed Page**: AI TOOL 프로젝트 공유, 기술 토론, 스토리
+- **Explore Page**: AI TOOL 기술 검색, 프로젝트 발견, 트렌드 탐색
+- **Create Post Page**: AI TOOL 프로젝트 업로드, 코드 스니펫 공유
+- **Activity Page**: AI TOOL 개발자 팔로우, 프로젝트 좋아요 알림
+- **Profile Page**: AI TOOL 개발자 프로필, 포트폴리오, 기술 스택
 
-### 🎨 AI 개발자 친화적 UI/UX
+### 🎨 AI TOOL 개발자 친화적 UI/UX
 - **다크 모드 지원**: 개발자들이 선호하는 다크 테마
 - **코드 하이라이팅**: 코드 스니펫 표시 최적화
-- **기술 태그**: AI/ML 기술 스택 태그 시스템
-- **프로젝트 갤러리**: AI 프로젝트 포트폴리오 전시
-- **실시간 협업**: AI 개발자들 간 실시간 소통
+- **기술 태그**: AI TOOL 기술 스택 태그 시스템
+- **프로젝트 갤러리**: AI TOOL 프로젝트 포트폴리오 전시
+- **실시간 협업**: AI TOOL 개발자들 간 실시간 소통
+
+### 🛠️ 지원하는 AI TOOL
+- **MCP (Model Context Protocol)**: AI 모델 통합 및 확장
+- **LLM (Large Language Models)**: GPT-4, Claude 등 대형 언어 모델
+- **Cursor**: AI 기반 코드 에디터
+- **n8n**: AI 워크플로우 자동화 플랫폼
+- **Claude**: AI 어시스턴트 및 튜토리얼
+
+### 📍 서울 지역 기반 커뮤니티
+- **송파구**: AI TOOL 연구소, AI TOOL 아카데미
+- **강남구**: AI TOOL 컨퍼런스, AI TOOL 연구센터
+- **강동구**: AI TOOL 엔지니어링팀
+- **마천동**: AI TOOL 사이언스팀
 
 ## 🏗️ 아키텍처
 
@@ -195,17 +208,17 @@ sns_app/
 - [x] Instagram 스타일 UI
 - [x] GitHub Pages 배포
 
-### Phase 2: AI 개발자 기능
-- [ ] AI 프로젝트 공유 기능
+### Phase 2: AI TOOL 개발자 기능
+- [ ] AI TOOL 프로젝트 공유 기능
 - [ ] 코드 스니펫 하이라이팅
 - [ ] 기술 스택 태그 시스템
-- [ ] AI 모델 데모 공유
+- [ ] AI TOOL 데모 공유
 
 ### Phase 3: 고급 기능
 - [ ] 실시간 코드 리뷰
-- [ ] AI 모델 성능 비교
+- [ ] AI TOOL 성능 비교
 - [ ] 협업 프로젝트 관리
-- [ ] AI 컨퍼런스 정보 공유
+- [ ] AI TOOL 컨퍼런스 정보 공유
 
 ## 🤝 기여하기
 

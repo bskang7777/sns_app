@@ -93,14 +93,14 @@ class _ActivityPageState extends ConsumerState<ActivityPage>
   Widget _buildFollowItem(int index) {
     final isNew = index < 3; // First 3 items are new
     final usernames = [
-      'travel_lover',
-      'food_enthusiast',
-      'nature_photographer',
-      'art_creator',
-      'fitness_guru',
-      'presentation_expert_choi',
-      'ai_lecturer_kang',
-      'research_team_kim',
+      'mcp_lover',
+      'llm_enthusiast',
+      'cursor_photographer',
+      'n8n_creator',
+      'claude_guru',
+      'mcp_expert_choi',
+      'llm_lecturer_kang',
+      'n8n_team_kim',
     ];
     final username = usernames[index % usernames.length];
 
@@ -114,7 +114,7 @@ class _ActivityPageState extends ConsumerState<ActivityPage>
               CircleAvatar(
                 radius: 24,
                 backgroundImage: AssetImage(
-                  'assets/images/user_avatar_${(index % 3) + 1}.jpg',
+                  _getAvatarImage(index),
                 ),
               ),
               if (isNew)
@@ -193,14 +193,14 @@ class _ActivityPageState extends ConsumerState<ActivityPage>
 
   Widget _buildLikeItem(int index) {
     final usernames = [
-      'travel_lover',
-      'food_enthusiast',
-      'nature_photographer',
-      'art_creator',
-      'fitness_guru',
-      'presentation_expert_choi',
-      'ai_lecturer_kang',
-      'research_team_kim',
+      'mcp_lover',
+      'llm_enthusiast',
+      'cursor_photographer',
+      'n8n_creator',
+      'claude_guru',
+      'mcp_expert_choi',
+      'llm_lecturer_kang',
+      'n8n_team_kim',
     ];
     final username = usernames[index % usernames.length];
     final isMultiple = index % 4 == 0; // Some items show multiple users
@@ -213,7 +213,7 @@ class _ActivityPageState extends ConsumerState<ActivityPage>
           CircleAvatar(
             radius: 24,
             backgroundImage: AssetImage(
-              'assets/images/user_avatar_${(index % 3) + 1}.jpg',
+              _getAvatarImage(index),
             ),
           ),
 
@@ -269,18 +269,30 @@ class _ActivityPageState extends ConsumerState<ActivityPage>
     );
   }
 
+  String _getAvatarImage(int index) {
+    final avatars = [
+      'assets/images/mcp_developer.jpg',
+      'assets/images/llm_expert.jpg',
+      'assets/images/cursor_engineer.jpg',
+      'assets/images/n8n_scientist.jpg',
+      'assets/images/claude_lecturer.jpg',
+      'assets/images/ai_tool_team.jpg',
+    ];
+    return avatars[index % avatars.length];
+  }
+
   String _getActivityImage(int index) {
     final images = [
-      'assets/images/ai_project_1.jpg',
-      'assets/images/presentation_1.jpg',
-      'assets/images/ai_project_2.jpg',
-      'assets/images/presentation_2.jpg',
-      'assets/images/ai_project_3.jpg',
-      'assets/images/presentation_3.jpg',
-      'assets/images/presentation_4.jpg',
-      'assets/images/user_avatar_1.jpg',
-      'assets/images/user_avatar_2.jpg',
-      'assets/images/profile_avatar.jpg',
+      'assets/images/mcp_tool.jpg',
+      'assets/images/llm_presentation.jpg',
+      'assets/images/cursor_tool.jpg',
+      'assets/images/n8n_workflow.jpg',
+      'assets/images/claude_tutorial.jpg',
+      'assets/images/ai_tool_dashboard.jpg',
+      'assets/images/mcp_developer.jpg',
+      'assets/images/llm_expert.jpg',
+      'assets/images/cursor_engineer.jpg',
+      'assets/images/n8n_scientist.jpg',
     ];
     return images[index % images.length];
   }
