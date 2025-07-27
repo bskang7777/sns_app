@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:sns_app/core/constants/app_colors.dart';
 import 'package:sns_app/core/constants/app_typography.dart';
+import 'package:sns_app/core/utils/permission_utils.dart';
+import 'dart:io';
 
 class CreatePostPage extends ConsumerStatefulWidget {
   const CreatePostPage({super.key});
@@ -13,6 +16,7 @@ class CreatePostPage extends ConsumerStatefulWidget {
 class _CreatePostPageState extends ConsumerState<CreatePostPage> {
   final TextEditingController _captionController = TextEditingController();
   final TextEditingController _locationController = TextEditingController();
+  final ImagePicker _imagePicker = ImagePicker();
   String? _selectedImagePath;
   bool _isLoading = false;
   bool _isPublic = true;
@@ -38,16 +42,39 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
-            leading: const Icon(Icons.camera_alt, color: AppColors.primary),
-            title: Text('카메라로 촬영', style: AppTypography.body1),
+            leading: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: AppColors.primary.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Icon(Icons.camera_alt,
+                  color: AppColors.primary, size: 24),
+            ),
+            title: Text('카메라로 촬영',
+                style:
+                    AppTypography.body1.copyWith(fontWeight: FontWeight.w600)),
+            subtitle: Text('새로운 사진을 촬영합니다', style: AppTypography.caption),
             onTap: () {
               Navigator.pop(context);
               _openCamera();
             },
           ),
+          const SizedBox(height: 8),
           ListTile(
-            leading: const Icon(Icons.photo_library, color: AppColors.primary),
-            title: Text('갤러리에서 선택', style: AppTypography.body1),
+            leading: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: AppColors.primary.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Icon(Icons.photo_library,
+                  color: AppColors.primary, size: 24),
+            ),
+            title: Text('갤러리에서 선택',
+                style:
+                    AppTypography.body1.copyWith(fontWeight: FontWeight.w600)),
+            subtitle: Text('기존 사진을 선택합니다', style: AppTypography.caption),
             onTap: () {
               Navigator.pop(context);
               _openGallery();
@@ -59,18 +86,166 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
     );
   }
 
-  void _openCamera() {
-    // TODO: Implement camera functionality
-    setState(() {
-      _selectedImagePath = 'assets/images/sample_post_1.jpg';
-    });
+  void _openCamera() async {
+    try {
+      // 카메라 권한 확인
+      final hasPermission = await PermissionUtils.hasCameraPermission();
+      if (!hasPermission) {
+        final granted = await PermissionUtils.requestCameraPermission();
+        if (!granted) {
+          if (mounted) {
+            _showPermissionDialog('카메라');
+          }
+          return;
+        }
+      }
+
+      // 카메라가 실제로 켜지는지 확인
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('카메라를 켜는 중...'),
+            duration: Duration(seconds: 1),
+            backgroundColor: AppColors.primary,
+          ),
+        );
+      }
+
+      final XFile? image = await _imagePicker.pickImage(
+        source: ImageSource.camera,
+        maxWidth: 1920,
+        maxHeight: 1080,
+        imageQuality: 85,
+        preferredCameraDevice: CameraDevice.rear, // 후면 카메라 우선
+      );
+
+      if (image != null) {
+        setState(() {
+          _selectedImagePath = image.path;
+        });
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('사진이 성공적으로 촬영되었습니다!'),
+              backgroundColor: AppColors.success,
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('사진 촬영이 취소되었습니다.'),
+              backgroundColor: AppColors.textSecondary,
+              duration: Duration(seconds: 1),
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('카메라 오류: $e'),
+            backgroundColor: AppColors.error,
+          ),
+        );
+      }
+    }
   }
 
-  void _openGallery() {
-    // TODO: Implement gallery picker
-    setState(() {
-      _selectedImagePath = 'assets/images/sample_post_2.jpg';
-    });
+  void _openGallery() async {
+    try {
+      // 갤러리 권한 확인
+      final hasPermission = await PermissionUtils.hasGalleryPermission();
+      if (!hasPermission) {
+        final granted = await PermissionUtils.requestGalleryPermission();
+        if (!granted) {
+          if (mounted) {
+            _showPermissionDialog('갤러리');
+          }
+          return;
+        }
+      }
+
+      // 갤러리 열기 중 메시지
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('갤러리를 여는 중...'),
+            duration: Duration(seconds: 1),
+            backgroundColor: AppColors.primary,
+          ),
+        );
+      }
+
+      final XFile? image = await _imagePicker.pickImage(
+        source: ImageSource.gallery,
+        maxWidth: 1920,
+        maxHeight: 1080,
+        imageQuality: 85,
+      );
+
+      if (image != null) {
+        setState(() {
+          _selectedImagePath = image.path;
+        });
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('이미지가 성공적으로 선택되었습니다!'),
+              backgroundColor: AppColors.success,
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('이미지 선택이 취소되었습니다.'),
+              backgroundColor: AppColors.textSecondary,
+              duration: Duration(seconds: 1),
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('갤러리 오류: $e'),
+            backgroundColor: AppColors.error,
+          ),
+        );
+      }
+    }
+  }
+
+  void _showPermissionDialog(String permissionName) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('권한 필요'),
+        content: Text('$permissionName 접근 권한이 필요합니다. 설정에서 권한을 허용해주세요.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('취소'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              PermissionUtils.openAppSettings();
+            },
+            child: const Text('설정으로 이동'),
+          ),
+        ],
+      ),
+    );
   }
 
   void _createPost() async {
@@ -137,14 +312,16 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          // Image Selection Area
-          _buildImageSelectionArea(),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Image Selection Area
+            _buildImageSelectionArea(),
 
-          // Post Details
-          Expanded(child: _buildPostDetails()),
-        ],
+            // Post Details
+            _buildPostDetails(),
+          ],
+        ),
       ),
     );
   }
@@ -160,38 +337,93 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
         border: Border.all(color: AppColors.textTertiary),
       ),
       child: _selectedImagePath != null
-          ? ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
-              child: Image.asset(
-                _selectedImagePath!,
-                fit: BoxFit.cover,
-                width: double.infinity,
-                height: double.infinity,
-              ),
+          ? Stack(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: _selectedImagePath!.startsWith('assets/')
+                      ? Image.asset(
+                          _selectedImagePath!,
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: double.infinity,
+                        )
+                      : Image.file(
+                          File(_selectedImagePath!),
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: double.infinity,
+                        ),
+                ),
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _selectedImagePath = null;
+                      });
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: const BoxDecoration(
+                        color: Colors.black54,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.close,
+                        color: Colors.white,
+                        size: 20,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             )
           : Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.add_photo_alternate_outlined,
-                  size: 64,
-                  color: AppColors.textSecondary,
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: AppColors.primary.withOpacity(0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.add_photo_alternate_outlined,
+                    size: 48,
+                    color: AppColors.primary,
+                  ),
                 ),
                 const SizedBox(height: 16),
                 Text(
                   '사진이나 동영상을 선택하세요',
                   style: AppTypography.body2.copyWith(
                     color: AppColors.textSecondary,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 8),
+                Text(
+                  '카메라로 촬영하거나 갤러리에서 선택할 수 있습니다',
+                  style: AppTypography.caption.copyWith(
+                    color: AppColors.textTertiary,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 24),
                 ElevatedButton.icon(
                   onPressed: _selectImage,
-                  icon: const Icon(Icons.add),
-                  label: const Text('선택'),
+                  icon: const Icon(Icons.add_a_photo, size: 20),
+                  label: const Text('이미지 선택'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
                 ),
               ],
@@ -223,9 +455,17 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
 
           // Location
           ListTile(
-            leading: const Icon(
-              Icons.location_on_outlined,
-              color: AppColors.textSecondary,
+            leading: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: AppColors.primary.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Icon(
+                Icons.location_on_outlined,
+                color: AppColors.primary,
+                size: 20,
+              ),
             ),
             title: TextField(
               controller: _locationController,
@@ -247,7 +487,18 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
 
           // Privacy Settings
           ListTile(
-            leading: const Icon(Icons.public, color: AppColors.textSecondary),
+            leading: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: AppColors.primary.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Icon(
+                _isPublic ? Icons.public : Icons.people,
+                color: AppColors.primary,
+                size: 20,
+              ),
+            ),
             title: Text(
               '공개 설정',
               style: AppTypography.body2.copyWith(color: AppColors.textPrimary),
@@ -273,10 +524,27 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
 
           // Advanced Options
           ListTile(
-            leading: const Icon(Icons.tune, color: AppColors.textSecondary),
+            leading: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: AppColors.primary.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Icon(
+                Icons.tune,
+                color: AppColors.primary,
+                size: 20,
+              ),
+            ),
             title: Text(
               '고급 설정',
               style: AppTypography.body2.copyWith(color: AppColors.textPrimary),
+            ),
+            subtitle: Text(
+              '콘텐츠 유형, 태그 등',
+              style: AppTypography.caption.copyWith(
+                color: AppColors.textSecondary,
+              ),
             ),
             trailing: const Icon(
               Icons.chevron_right,
@@ -287,7 +555,7 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
             },
           ),
 
-          const Spacer(),
+          const SizedBox(height: 100),
 
           // Loading indicator
           if (_isLoading)
