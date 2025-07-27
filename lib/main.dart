@@ -17,7 +17,7 @@ void main() {
 class SnsApp extends StatelessWidget {
   const SnsApp({super.key});
 
-  @override
+  @override`
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'SNS App',
