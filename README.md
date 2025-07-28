@@ -1,94 +1,99 @@
-# SNS App - AI TOOL 개발자 모임
+# SNS App - Flutter Social Network Application
 
-AI TOOL 개발자들의 소통 공간을 위한 Instagram Style SNS 앱입니다.
+## 🎉 Latest Updates (v1.2.0)
 
-## 🚀 최신 업데이트 (v1.1.0)
+### ✨ New Features
+- **🌐 Chrome Web Support**: Full web browser compatibility
+- **🎬 AI YouTube Videos**: 17 curated AI videos with interactive playback
+- **✨ Enhanced Animations**: Pulse animations, smooth transitions, and interactive icons
+- **🔍 Smart Search**: Video search and category filtering
+- **📱 Multi-Platform**: Android, Windows, and Web support
 
-### ✨ 새로운 기능
-- **실제 카메라 기능**: 카메라 선택 시 실제 카메라가 켜집니다
-- **갤러리 이미지 선택**: 실제 갤러리에서 이미지 선택 가능
-- **권한 처리 시스템**: Android/iOS 권한 자동 요청 및 처리
-- **UI/UX 개선**: 모던한 아이콘 디자인 및 레이아웃 개선
-- **Overflow 에러 수정**: 스크롤 가능한 반응형 레이아웃
+### 🚀 Performance Improvements
+- Web-optimized YouTube URL handling
+- Enhanced error handling and user feedback
+- Improved animation performance
+- Responsive UI/UX design
 
-## 📱 주요 기능
+## 🎯 Key Features
 
-### 🎯 이미지 관리
-- **카메라 촬영**: 실제 카메라로 사진 촬영
-- **갤러리 선택**: 갤러리에서 이미지 선택
-- **이미지 미리보기**: 실시간 이미지 미리보기
-- **이미지 삭제**: 선택한 이미지 쉽게 제거
+### 📸 Image Management
+- **Camera Integration**: Direct camera access with permission handling
+- **Gallery Access**: Browse and select images from device gallery
+- **Real-time Preview**: Instant image preview with clear option
+- **Permission Management**: Automatic permission requests with user guidance
 
-### 🔐 권한 관리
-- **카메라 권한**: 자동 권한 요청 및 처리
-- **갤러리 권한**: 이미지 접근 권한 관리
-- **권한 거부 처리**: 설정으로 이동하는 안내 다이얼로그
+### 🎬 YouTube Video Integration
+- **17 AI Videos**: Curated collection of AI-related content
+- **Interactive Playback**: Pulse animation play buttons
+- **Category Filtering**: Filter videos by category
+- **Smart Search**: Search through video titles and descriptions
+- **External Launch**: Opens videos in YouTube app or browser
 
-### 🎨 UI/UX
-- **모던한 디자인**: 일관된 아이콘 시스템
-- **반응형 레이아웃**: 다양한 화면 크기 지원
-- **사용자 피드백**: 실시간 상태 알림 메시지
+### 🎨 UI/UX Enhancements
+- **Modern Icons**: Redesigned with background containers and animations
+- **Smooth Animations**: Pulse, rotation, and scale effects
+- **Responsive Design**: Adapts to different screen sizes
+- **Interactive Feedback**: Visual feedback for all user actions
 
-## 🛠 설치 및 실행
+### 🔐 Permission Management
+- **Camera Permissions**: Automatic camera access requests
+- **Storage Permissions**: Gallery access with proper permissions
+- **User Guidance**: Clear permission request dialogs
+- **Fallback Handling**: Graceful handling of permission denials
 
-### 필수 요구사항
-- Flutter SDK 3.4.0 이상
-- Dart SDK 3.4.0 이상
-- Android Studio / VS Code
-- Android SDK (Android 개발용)
-- Xcode (iOS 개발용)
+## 📦 Installation & Execution
 
-### 설치 방법
-
-1. **저장소 클론**
+### Prerequisites
 ```bash
-git clone https://github.com/your-username/sns_app.git
-cd sns_app
-```
+# Flutter SDK 설치
+flutter --version
 
-2. **의존성 설치**
-```bash
+# 의존성 설치
 flutter pub get
 ```
 
-3. **앱 실행**
+### Quick Start
 ```bash
-# Android
-flutter run -d android
+# 개발 모드 실행
+flutter run
 
-# iOS
-flutter run -d ios
+# 웹 서버 모드 (Chrome 지원)
+flutter run -d web-server --web-port 8080
 
-# Windows
-flutter run -d windows
-
-# 웹
-flutter run -d chrome
+# 특정 디바이스에서 실행
+flutter run -d chrome    # Chrome 브라우저
+flutter run -d edge      # Edge 브라우저
+flutter run -d windows   # Windows 데스크톱
 ```
 
-## 📦 배포
+## 🚀 Deployment
 
-### Android APK 빌드
+### Android APK
 ```bash
+# 릴리즈 APK 빌드
 flutter build apk --release
+
+# APK 위치: build/app/outputs/flutter-apk/app-release.apk
 ```
 
-### Android App Bundle (Google Play Store)
+### Windows Executable
 ```bash
-flutter build appbundle --release
-```
-
-### Windows 실행 파일
-```bash
+# Windows 실행파일 빌드
 flutter build windows --release
+
+# 실행파일 위치: build/windows/runner/Release/
 ```
 
-### 웹 배포
+### Web Deployment
 ```bash
+# 웹 빌드
 flutter build web --release
+
+# 웹 파일 위치: build/web/
 ```
 
-## 🏗 프로젝트 구조
+## 📁 Project Structure
 
 ```
 lib/
@@ -96,88 +101,151 @@ lib/
 │   ├── constants/
 │   │   ├── app_colors.dart
 │   │   └── app_typography.dart
+│   ├── models/
+│   │   └── youtube_video.dart
+│   ├── services/
+│   │   └── youtube_service.dart
 │   └── utils/
 │       └── permission_utils.dart
 ├── presentation/
-│   └── pages/
-│       ├── create_post_page.dart
-│       ├── feed_page.dart
-│       ├── explore_page.dart
-│       ├── activity_page.dart
-│       └── profile_page.dart
+│   ├── pages/
+│   │   ├── create_post_page.dart
+│   │   ├── feed_page.dart
+│   │   ├── profile_page.dart
+│   │   └── youtube_videos_page.dart
+│   └── widgets/
 └── main.dart
 ```
 
-## 🔧 기술 스택
+## 🛠 Tech Stack
 
-- **Framework**: Flutter 3.4.0+
-- **Language**: Dart 3.4.0+
+- **Framework**: Flutter 3.x
+- **Language**: Dart
 - **State Management**: Riverpod
-- **Navigation**: Go Router
-- **Image Picker**: image_picker
+- **Navigation**: GoRouter
+- **UI Components**: Material Design 3
+- **Image Handling**: image_picker, cached_network_image
+- **Video Integration**: url_launcher
 - **Permissions**: permission_handler
-- **Storage**: Shared Preferences, Hive
-- **Network**: Dio, Retrofit
 
-## 📋 주요 패키지
+## 📦 Key Packages
 
 ```yaml
 dependencies:
+  flutter:
+    sdk: flutter
   flutter_riverpod: ^2.4.9
   go_router: ^12.1.3
   image_picker: ^1.0.4
   permission_handler: ^11.1.0
+  url_launcher: ^6.2.1
   cached_network_image: ^3.3.0
-  shared_preferences: ^2.2.2
-  hive: ^2.2.3
-  dio: ^5.4.0
 ```
 
-## 🎯 사용 방법
+## 🎮 Usage
 
-### 게시물 생성
-1. 하단 네비게이션에서 **"+"** 버튼 클릭
-2. **"이미지 선택"** 버튼 클릭
-3. **"카메라로 촬영"** 또는 **"갤러리에서 선택"** 선택
-4. 권한 허용 후 이미지 선택
-5. 문구 입력 및 설정 후 **"공유"** 버튼 클릭
+### 📱 Mobile Features
+1. **Camera Access**: Tap camera icon to take photos
+2. **Gallery Selection**: Tap gallery icon to browse images
+3. **Post Creation**: Add images and text to create posts
+4. **Video Playback**: Watch AI videos with interactive controls
 
-### 권한 관리
-- 앱 첫 실행 시 필요한 권한 자동 요청
-- 권한 거부 시 설정으로 이동하는 안내 다이얼로그 표시
+### 🌐 Web Features
+1. **Browser Compatibility**: Works on Chrome, Edge, and other browsers
+2. **Responsive Design**: Adapts to different screen sizes
+3. **External Links**: YouTube videos open in new tabs
+4. **Smooth Animations**: All animations work perfectly in web
 
-## 🐛 문제 해결
+### 🖥️ Desktop Features
+1. **Native Performance**: Full desktop application experience
+2. **Window Management**: Proper window sizing and positioning
+3. **Keyboard Navigation**: Full keyboard support
+4. **System Integration**: Native desktop integration
 
-### 일반적인 문제들
+## 🔧 Troubleshooting
 
-1. **권한 오류**
-   - 설정에서 앱 권한 확인
-   - 앱 재설치 후 권한 재요청
+### Common Issues
 
-2. **카메라가 켜지지 않음**
-   - 카메라 권한 확인
-   - 다른 앱에서 카메라 사용 중인지 확인
+#### Permission Errors
+```bash
+# Android 권한 확인
+flutter doctor --android-licenses
 
-3. **갤러리 접근 오류**
-   - 갤러리 권한 확인
-   - Android 13+ 에서는 READ_MEDIA_IMAGES 권한 필요
+# iOS 권한 확인 (macOS에서만)
+flutter doctor --ios-licenses
+```
 
-## 🤝 기여하기
+#### Build Errors
+```bash
+# 클린 빌드
+flutter clean
+flutter pub get
+flutter build apk --release
+```
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+#### Web Issues
+```bash
+# 웹 서버 모드로 실행
+flutter run -d web-server --web-port 8080
 
-## 📄 라이선스
+# 브라우저에서 http://localhost:8080 접속
+```
 
-이 프로젝트는 MIT 라이선스 하에 배포됩니다. 자세한 내용은 `LICENSE` 파일을 참조하세요.
+### Platform-Specific Setup
 
-## 📞 연락처
+#### Android
+- Minimum SDK: 21
+- Target SDK: 34
+- Permissions: Camera, Storage
 
-프로젝트 링크: [https://github.com/your-username/sns_app](https://github.com/your-username/sns_app)
+#### iOS
+- Minimum iOS: 12.0
+- Permissions: Camera, Photo Library
+
+#### Windows
+- Windows 10 SDK
+- Visual Studio 2019 or later
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 📞 Contact
+
+- **Developer**: AI Assistant
+- **Project**: SNS App
+- **Version**: v1.2.0
+- **Last Updated**: December 2024
 
 ---
 
-**AI TOOL 개발자 모임** - 함께 성장하는 개발자 커뮤니티 🚀
+## 🎯 Development Roadmap
+
+### ✅ Completed (v1.2.0)
+- [x] Camera and gallery integration
+- [x] YouTube video integration
+- [x] Web browser support
+- [x] Enhanced animations
+- [x] Multi-platform deployment
+
+### 🚧 Planned (v1.3.0)
+- [ ] User authentication
+- [ ] Real-time messaging
+- [ ] Push notifications
+- [ ] Advanced video features
+- [ ] Social sharing
+
+### 🔮 Future (v2.0.0)
+- [ ] AI-powered content recommendations
+- [ ] Advanced image editing
+- [ ] Video creation tools
+- [ ] Community features
+- [ ] Monetization options
