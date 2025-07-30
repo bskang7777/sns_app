@@ -4,6 +4,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:sns_app/core/constants/app_colors.dart';
 import 'package:sns_app/core/constants/app_typography.dart';
 import 'package:sns_app/core/utils/permission_utils.dart';
+import 'package:sns_app/presentation/pages/location_picker_page.dart';
+import 'package:sns_app/presentation/pages/advanced_settings_page.dart';
+import 'package:sns_app/presentation/pages/share_page.dart';
 import 'dart:io';
 
 class CreatePostPage extends ConsumerStatefulWidget {
@@ -18,8 +21,10 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
   final TextEditingController _locationController = TextEditingController();
   final ImagePicker _imagePicker = ImagePicker();
   String? _selectedImagePath;
+  String? _selectedVideoPath;
   bool _isLoading = false;
   bool _isPublic = true;
+  String? _selectedLocation;
 
   @override
   void dispose() {
@@ -28,14 +33,14 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
     super.dispose();
   }
 
-  void _selectImage() {
+  void _selectMedia() {
     showModalBottomSheet(
       context: context,
-      builder: (context) => _buildImageSourceBottomSheet(),
+      builder: (context) => _buildMediaSourceBottomSheet(),
     );
   }
 
-  Widget _buildImageSourceBottomSheet() {
+  Widget _buildMediaSourceBottomSheet() {
     return Container(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -68,13 +73,33 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
                 color: AppColors.primary.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(8),
               ),
+              child: const Icon(Icons.videocam,
+                  color: AppColors.primary, size: 24),
+            ),
+            title: Text('동영상 촬영',
+                style:
+                    AppTypography.body1.copyWith(fontWeight: FontWeight.w600)),
+            subtitle: Text('새로운 동영상을 촬영합니다', style: AppTypography.caption),
+            onTap: () {
+              Navigator.pop(context);
+              _openVideoCamera();
+            },
+          ),
+          const SizedBox(height: 8),
+          ListTile(
+            leading: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: AppColors.primary.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+              ),
               child: const Icon(Icons.photo_library,
                   color: AppColors.primary, size: 24),
             ),
             title: Text('갤러리에서 선택',
                 style:
                     AppTypography.body1.copyWith(fontWeight: FontWeight.w600)),
-            subtitle: Text('기존 사진을 선택합니다', style: AppTypography.caption),
+            subtitle: Text('기존 사진/동영상을 선택합니다', style: AppTypography.caption),
             onTap: () {
               Navigator.pop(context);
               _openGallery();
@@ -88,7 +113,6 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
 
   void _openCamera() async {
     try {
-      // 카메라 권한 확인
       final hasPermission = await PermissionUtils.hasCameraPermission();
       if (!hasPermission) {
         final granted = await PermissionUtils.requestCameraPermission();
@@ -100,7 +124,6 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
         }
       }
 
-      // 카메라가 실제로 켜지는지 확인
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -116,12 +139,13 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
         maxWidth: 1920,
         maxHeight: 1080,
         imageQuality: 85,
-        preferredCameraDevice: CameraDevice.rear, // 후면 카메라 우선
+        preferredCameraDevice: CameraDevice.rear,
       );
 
       if (image != null) {
         setState(() {
           _selectedImagePath = image.path;
+          _selectedVideoPath = null;
         });
 
         if (mounted) {
@@ -130,16 +154,6 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
               content: Text('사진이 성공적으로 촬영되었습니다!'),
               backgroundColor: AppColors.success,
               duration: Duration(seconds: 2),
-            ),
-          );
-        }
-      } else {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('사진 촬영이 취소되었습니다.'),
-              backgroundColor: AppColors.textSecondary,
-              duration: Duration(seconds: 1),
             ),
           );
         }
@@ -156,9 +170,65 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
     }
   }
 
+  void _openVideoCamera() async {
+    try {
+      final hasPermission = await PermissionUtils.hasCameraPermission();
+      if (!hasPermission) {
+        final granted = await PermissionUtils.requestCameraPermission();
+        if (!granted) {
+          if (mounted) {
+            _showPermissionDialog('카메라');
+          }
+          return;
+        }
+      }
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('동영상 촬영을 시작합니다...'),
+            duration: Duration(seconds: 1),
+            backgroundColor: AppColors.primary,
+          ),
+        );
+      }
+
+      final XFile? video = await _imagePicker.pickVideo(
+        source: ImageSource.camera,
+        maxDuration: const Duration(seconds: 60),
+        preferredCameraDevice: CameraDevice.rear,
+      );
+
+      if (video != null) {
+        setState(() {
+          _selectedVideoPath = video.path;
+          _selectedImagePath = null;
+        });
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('동영상이 성공적으로 촬영되었습니다!'),
+              backgroundColor: AppColors.success,
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('동영상 촬영 오류: $e'),
+            backgroundColor: AppColors.error,
+          ),
+        );
+      }
+    }
+  }
+
   void _openGallery() async {
     try {
-      // 갤러리 권한 확인
       final hasPermission = await PermissionUtils.hasGalleryPermission();
       if (!hasPermission) {
         final granted = await PermissionUtils.requestGalleryPermission();
@@ -170,7 +240,6 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
         }
       }
 
-      // 갤러리 열기 중 메시지
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -181,6 +250,7 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
         );
       }
 
+      // 먼저 이미지 선택 시도
       final XFile? image = await _imagePicker.pickImage(
         source: ImageSource.gallery,
         maxWidth: 1920,
@@ -191,6 +261,7 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
       if (image != null) {
         setState(() {
           _selectedImagePath = image.path;
+          _selectedVideoPath = null;
         });
 
         if (mounted) {
@@ -203,14 +274,27 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
           );
         }
       } else {
-        if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('이미지 선택이 취소되었습니다.'),
-              backgroundColor: AppColors.textSecondary,
-              duration: Duration(seconds: 1),
-            ),
-          );
+        // 이미지가 선택되지 않으면 동영상 선택 시도
+        final XFile? video = await _imagePicker.pickVideo(
+          source: ImageSource.gallery,
+          maxDuration: const Duration(seconds: 300),
+        );
+
+        if (video != null) {
+          setState(() {
+            _selectedVideoPath = video.path;
+            _selectedImagePath = null;
+          });
+
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('동영상이 성공적으로 선택되었습니다!'),
+                backgroundColor: AppColors.success,
+                duration: Duration(seconds: 2),
+              ),
+            );
+          }
         }
       }
     } catch (e) {
@@ -225,12 +309,12 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
     }
   }
 
-  void _showPermissionDialog(String permissionName) {
+  void _showPermissionDialog(String permission) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('권한 필요'),
-        content: Text('$permissionName 접근 권한이 필요합니다. 설정에서 권한을 허용해주세요.'),
+        title: Text('$permission 권한 필요'),
+        content: Text('게시물을 생성하려면 $permission 권한이 필요합니다.'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
@@ -241,43 +325,70 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
               Navigator.pop(context);
               PermissionUtils.openAppSettings();
             },
-            child: const Text('설정으로 이동'),
+            child: const Text('설정'),
           ),
         ],
       ),
     );
   }
 
-  void _createPost() async {
-    if (_selectedImagePath == null) {
+  void _addLocation() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const LocationPickerPage(),
+      ),
+    );
+
+    if (result != null && result is Map<String, dynamic>) {
+      setState(() {
+        _selectedLocation = result['name'];
+        _locationController.text = result['name'];
+      });
+    }
+  }
+
+  void _openAdvancedSettings() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const AdvancedSettingsPage(),
+      ),
+    );
+
+    if (result != null && result is Map<String, dynamic>) {
+      setState(() {
+        _isPublic = result['isPublic'] ?? _isPublic;
+      });
+    }
+  }
+
+  void _sharePost() async {
+    if (_selectedImagePath == null && _selectedVideoPath == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('이미지를 선택해주세요.'),
-          backgroundColor: AppColors.error,
-        ),
+        const SnackBar(content: Text('이미지나 동영상을 선택해주세요')),
       );
       return;
     }
 
-    setState(() {
-      _isLoading = true;
-    });
-
-    // TODO: Implement post creation
-    await Future.delayed(const Duration(seconds: 2));
-
-    setState(() {
-      _isLoading = false;
-    });
-
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('게시물이 성공적으로 업로드되었습니다!'),
-          backgroundColor: AppColors.success,
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SharePage(
+          imagePath: _selectedImagePath,
+          videoPath: _selectedVideoPath,
+          caption: _captionController.text,
+          location: _selectedLocation,
         ),
-      );
+      ),
+    );
+
+    if (result == true) {
+      // 공유 성공
       Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('게시물이 공유되었습니다!')),
+      );
     }
   }
 
@@ -301,7 +412,7 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
         ),
         actions: [
           TextButton(
-            onPressed: _isLoading ? null : _createPost,
+            onPressed: _isLoading ? null : _sharePost,
             child: Text(
               '공유',
               style: AppTypography.button.copyWith(
@@ -336,24 +447,38 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
         borderRadius: BorderRadius.circular(8.0),
         border: Border.all(color: AppColors.textTertiary),
       ),
-      child: _selectedImagePath != null
+      child: _selectedImagePath != null || _selectedVideoPath != null
           ? Stack(
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
-                  child: _selectedImagePath!.startsWith('assets/')
-                      ? Image.asset(
-                          _selectedImagePath!,
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          height: double.infinity,
-                        )
-                      : Image.file(
-                          File(_selectedImagePath!),
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                          height: double.infinity,
-                        ),
+                  child: _selectedImagePath != null
+                      ? _selectedImagePath!.startsWith('assets/')
+                          ? Image.asset(
+                              _selectedImagePath!,
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: double.infinity,
+                            )
+                          : Image.file(
+                              File(_selectedImagePath!),
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: double.infinity,
+                            )
+                      : _selectedVideoPath!.startsWith('assets/')
+                          ? Image.asset(
+                              _selectedVideoPath!,
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: double.infinity,
+                            )
+                          : Image.file(
+                              File(_selectedVideoPath!),
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: double.infinity,
+                            ),
                 ),
                 Positioned(
                   top: 8,
@@ -362,6 +487,7 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
                     onTap: () {
                       setState(() {
                         _selectedImagePath = null;
+                        _selectedVideoPath = null;
                       });
                     },
                     child: Container(
@@ -413,9 +539,9 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
                 ),
                 const SizedBox(height: 24),
                 ElevatedButton.icon(
-                  onPressed: _selectImage,
+                  onPressed: _selectMedia,
                   icon: const Icon(Icons.add_a_photo, size: 20),
-                  label: const Text('이미지 선택'),
+                  label: const Text('이미지/동영상 선택'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     foregroundColor: Colors.white,
@@ -479,7 +605,7 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
               style: AppTypography.body2.copyWith(color: AppColors.textPrimary),
             ),
             onTap: () {
-              // TODO: Implement location picker
+              _addLocation();
             },
           ),
 
@@ -551,7 +677,7 @@ class _CreatePostPageState extends ConsumerState<CreatePostPage> {
               color: AppColors.textSecondary,
             ),
             onTap: () {
-              // TODO: Show advanced options
+              _openAdvancedSettings();
             },
           ),
 

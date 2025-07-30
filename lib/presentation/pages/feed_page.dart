@@ -5,6 +5,8 @@ import 'package:sns_app/core/constants/app_typography.dart';
 import 'package:sns_app/domain/entities/post.dart';
 import 'package:sns_app/presentation/widgets/post_card.dart';
 import 'package:sns_app/presentation/widgets/story_list.dart';
+import 'package:sns_app/presentation/widgets/youtube_video_card.dart';
+import 'package:sns_app/presentation/widgets/story_creator.dart';
 
 class FeedPage extends ConsumerStatefulWidget {
   const FeedPage({super.key});
@@ -16,6 +18,7 @@ class FeedPage extends ConsumerStatefulWidget {
 class _FeedPageState extends ConsumerState<FeedPage> {
   final ScrollController _scrollController = ScrollController();
   bool _isLoading = false;
+  bool _isLiked = false;
 
   @override
   void initState() {
@@ -50,6 +53,41 @@ class _FeedPageState extends ConsumerState<FeedPage> {
     }
   }
 
+  void _onAddPressed() {
+    // Navigate to create post page
+    Navigator.pushNamed(context, '/create-post');
+  }
+
+  void _onLikePressed() {
+    setState(() {
+      _isLiked = !_isLiked;
+    });
+    // TODO: Implement like functionality with backend
+  }
+
+  void _onStoryAddPressed() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => const StoryCreator(),
+    );
+  }
+
+  void _onActivityPressed() {
+    // TODO: Navigate to activity page
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('활동 페이지로 이동합니다')),
+    );
+  }
+
+  void _onMessagesPressed() {
+    // TODO: Navigate to messages page
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('메시지 페이지로 이동합니다')),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,39 +108,71 @@ class _FeedPageState extends ConsumerState<FeedPage> {
               Icons.add_box_outlined,
               color: AppColors.textPrimary,
             ),
-            onPressed: () {
-              // TODO: Navigate to create post
-            },
+            onPressed: _onAddPressed,
           ),
           IconButton(
-            icon: const Icon(
-              Icons.favorite_border,
-              color: AppColors.textPrimary,
+            icon: Icon(
+              _isLiked ? Icons.favorite : Icons.favorite_border,
+              color: _isLiked ? AppColors.primary : AppColors.textPrimary,
             ),
-            onPressed: () {
-              // TODO: Navigate to activity
-            },
+            onPressed: _onLikePressed,
           ),
           IconButton(
             icon: const Icon(
               Icons.chat_bubble_outline,
               color: AppColors.textPrimary,
             ),
-            onPressed: () {
-              // TODO: Navigate to messages
-            },
+            onPressed: _onMessagesPressed,
           ),
         ],
       ),
       body: RefreshIndicator(
         onRefresh: () async {
           // TODO: Implement refresh
+          await Future.delayed(const Duration(seconds: 1));
         },
         child: ListView(
           controller: _scrollController,
           children: [
-            // Stories
-            const StoryList(),
+            // Stories with Add Story button
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Row(
+                children: [
+                  // Add Story Button
+                  GestureDetector(
+                    onTap: _onStoryAddPressed,
+                    child: Container(
+                      width: 80,
+                      height: 80,
+                      margin: const EdgeInsets.only(left: 16.0, right: 8.0),
+                      decoration: BoxDecoration(
+                        color: AppColors.primary.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(40),
+                        border: Border.all(
+                          color: AppColors.primary,
+                          width: 2,
+                        ),
+                      ),
+                      child: const Icon(
+                        Icons.add,
+                        color: AppColors.primary,
+                        size: 30,
+                      ),
+                    ),
+                  ),
+                  // Existing Stories
+                  const Expanded(child: StoryList()),
+                ],
+              ),
+            ),
+
+            // YouTube Video Card (First item)
+            const YouTubeVideoCard(
+              videoId: 'dQw4w9WgXcQ', // Rick Roll for demo
+              title: 'AI TOOL 개발 가이드',
+              description: '최신 AI TOOL 개발 방법을 알아보세요!',
+            ),
 
             // Posts
             ..._buildPosts(),
@@ -186,15 +256,27 @@ class _FeedPageState extends ConsumerState<FeedPage> {
         caption: postData['caption'],
         onLike: () {
           // TODO: Implement like functionality
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('좋아요!')),
+          );
         },
         onComment: () {
           // TODO: Navigate to comments
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('댓글 페이지로 이동합니다')),
+          );
         },
         onShare: () {
           // TODO: Implement share functionality
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('공유 기능을 실행합니다')),
+          );
         },
         onSave: () {
           // TODO: Implement save functionality
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('저장되었습니다')),
+          );
         },
       );
     }).toList();

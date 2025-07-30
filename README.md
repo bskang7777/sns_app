@@ -8,6 +8,7 @@
 - **✨ Enhanced Animations**: Pulse animations, smooth transitions, and interactive icons
 - **🔍 Smart Search**: Video search and category filtering
 - **📱 Multi-Platform**: Android, Windows, and Web support
+- **🤖 Playwright MCP Integration**: Automated browser testing and web automation
 
 ### 🚀 Performance Improvements
 - Web-optimized YouTube URL handling
@@ -51,6 +52,70 @@ flutter --version
 
 # 의존성 설치
 flutter pub get
+```
+
+### Playwright MCP 설치 및 설정
+
+#### 1. Playwright MCP 서버 설치
+```bash
+# Playwright MCP 서버 전역 설치
+npm install -g @playwright/mcp
+
+# Playwright 브라우저 설치
+npx playwright install
+```
+
+#### 2. MCP 설정 파일 생성
+프로젝트 루트에 `mcp_config.json` 파일을 생성하고 다음 내용을 추가:
+
+```json
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["@playwright/mcp"],
+      "env": {}
+    }
+  }
+}
+```
+
+#### 3. MCP 서버 등록 확인
+```bash
+# MCP 서버 상태 확인
+npx @playwright/mcp --help
+
+# 브라우저 설치 확인
+npx playwright install --dry-run
+```
+
+#### 4. MCP 클라이언트에서 사용
+MCP 클라이언트에서 다음과 같은 기능들을 사용할 수 있습니다:
+
+- **웹 자동화**: 브라우저 제어, 페이지 스크린샷, 요소 상호작용
+- **테스트 자동화**: 웹 애플리케이션 자동 테스트
+- **데이터 수집**: 웹 페이지에서 데이터 추출
+- **UI 테스트**: 사용자 인터페이스 자동화 테스트
+
+#### 5. 설치 확인 및 테스트
+```bash
+# 간단한 테스트 실행
+node simple_test.js
+
+# 직접 MCP 서버 테스트
+npx @playwright/mcp --help
+```
+
+#### 6. 문제 해결
+만약 `npx` 명령어 관련 오류가 발생하는 경우:
+```bash
+# Node.js 환경 확인
+node --version
+npm --version
+npx --version
+
+# 대안: npm을 통해 실행
+npm exec @playwright/mcp -- --help
 ```
 
 ### Quick Start
@@ -127,6 +192,60 @@ lib/
 - **Image Handling**: image_picker, cached_network_image
 - **Video Integration**: url_launcher
 - **Permissions**: permission_handler
+- **E2E Testing**: Playwright
+- **CI/CD**: GitHub Actions
+
+## 🧪 E2E Testing with Playwright
+
+### 설치 및 설정
+```bash
+# Playwright 설치
+npm install --save-dev @playwright/test
+
+# 브라우저 설치
+npx playwright install
+```
+
+### 테스트 실행
+```bash
+# 모든 E2E 테스트 실행
+npm run test:e2e
+
+# UI 모드로 테스트 실행
+npm run test:e2e:ui
+
+# 디버그 모드로 테스트 실행
+npm run test:e2e:debug
+
+# 특정 브라우저에서 테스트 실행
+npm run test:e2e:chrome
+npm run test:e2e:firefox
+npm run test:e2e:safari
+npm run test:e2e:mobile
+
+# 테스트 리포트 확인
+npm run test:e2e:report
+```
+
+### 테스트 구조
+```
+e2e/
+├── README.md           # 테스트 가이드
+├── example.spec.js     # 기본 테스트 예제
+├── auth/               # 인증 관련 테스트
+├── navigation/         # 네비게이션 테스트
+├── posts/              # 게시물 관련 테스트
+├── profile/            # 프로필 관련 테스트
+└── utils/              # 테스트 유틸리티
+    ├── PageObjects.js  # 페이지 객체 모델
+    └── testHelpers.js  # 테스트 헬퍼 함수
+```
+
+### CI/CD Integration
+- GitHub Actions에서 자동 테스트 실행
+- 크로스 브라우저 테스트 (Chrome, Firefox, Safari, Mobile)
+- 테스트 결과 리포트 자동 생성
+- 실패 시 스크린샷 및 비디오 캡처
 
 ## 📦 Key Packages
 
