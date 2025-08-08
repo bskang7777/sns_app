@@ -69,7 +69,7 @@ class StoryList extends StatelessWidget {
 
           // Username
           Text(
-            isAddStory ? '내 스토리' : 'ai_tool_user_$index',
+            isAddStory ? '내 스토리1' : 'ai_tool_user_$index',
             style: AppTypography.caption.copyWith(
               color: AppColors.textPrimary,
               fontSize: 10,

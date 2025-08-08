@@ -169,7 +169,7 @@ class _FeedPageState extends ConsumerState<FeedPage> {
 
             // YouTube Video Card (First item)
             const YouTubeVideoCard(
-              videoId: 'dQw4w9WgXcQ', // Rick Roll for demo
+              videoId: '3eDguAZOFsA', // Rick Roll for demo
               title: 'AI TOOL 개발 가이드',
               description: '최신 AI TOOL 개발 방법을 알아보세요!',
             ),
