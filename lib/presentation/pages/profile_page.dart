@@ -3,6 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:sns_app/core/constants/app_colors.dart';
 import 'package:sns_app/core/constants/app_typography.dart';
 import 'package:sns_app/presentation/pages/presentation_page.dart';
+import 'package:sns_app/presentation/providers/auth_provider.dart';
+import 'package:sns_app/presentation/pages/auth/login_page.dart';
+import 'package:sns_app/data/services/auth_service.dart';
 
 class ProfilePage extends ConsumerStatefulWidget {
   const ProfilePage({super.key});
@@ -51,6 +54,19 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
             ),
             onPressed: () {
               // TODO: Navigate to create post
+            },
+          ),
+          // 인증 상태에 따른 로그인/로그아웃 버튼
+          Consumer(
+            builder: (context, ref, child) {
+              final user = ref.watch(currentUserProvider);
+              return IconButton(
+                icon: Icon(
+                  user != null ? Icons.logout : Icons.login,
+                  color: AppColors.textPrimary,
+                ),
+                onPressed: () => _handleAuthAction(ref, user),
+              );
             },
           ),
           IconButton(
@@ -538,5 +554,21 @@ class _ProfilePageState extends ConsumerState<ProfilePage>
         ),
       ),
     );
+  }
+
+  void _handleAuthAction(WidgetRef ref, MockUser? user) {
+    if (user == null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const LoginPage(),
+        ),
+      );
+    } else {
+      ref.invalidate(currentUserProvider);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('로그아웃되었습니다.')),
+      );
+    }
   }
 }

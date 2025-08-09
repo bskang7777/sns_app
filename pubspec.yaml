@@ -67,12 +67,13 @@ dependencies:
   share_plus: ^7.2.1
   webview_flutter: ^4.4.2
 
-  # Firebase (Optional for production) - Temporarily disabled due to compatibility issues
+  # Firebase & Authentication (호환성 문제로 임시 비활성화)
   # firebase_core: ^2.24.2
   # firebase_auth: ^4.15.3
   # firebase_storage: ^11.5.6
   # firebase_analytics: ^10.7.4
   # firebase_crashlytics: ^3.4.8
+  # google_sign_in: ^6.1.6
 
 dev_dependencies:
   flutter_test:

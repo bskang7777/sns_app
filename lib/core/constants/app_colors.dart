@@ -23,6 +23,9 @@ class AppColors {
   static const Color error = Color(0xFFFF3B30);
   static const Color warning = Color(0xFFFF9500);
 
+  // UI Colors
+  static const Color divider = Color(0xFFE0E0E0);
+
   // Instagram-like Colors
   static const Color likeRed = Color(0xFFED4956);
   static const Color storyGradient1 = Color(0xFF833AB4);

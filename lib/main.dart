@@ -10,8 +10,14 @@ import 'package:sns_app/presentation/pages/activity_page.dart';
 import 'package:sns_app/presentation/pages/profile_page.dart';
 import 'package:sns_app/presentation/pages/presentation_page.dart';
 import 'package:sns_app/presentation/pages/youtube_videos_page.dart';
+import 'package:sns_app/presentation/pages/auth/login_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // TODO: Firebase 초기화는 실제 프로덕션에서 활성화
+  // Firebase와 Google 로그인을 위한 구조는 이미 구현되어 있음
+
   runApp(const ProviderScope(child: SnsApp()));
 }
 
